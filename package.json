@@ -17,11 +17,27 @@
     "react-dom": "latest"
   },
   "devDependencies": {
+    "@babel/core": "^8.0.1",
+    "@babel/eslint-parser": "^8.0.1",
+    "@babel/preset-react": "^8.0.1",
+    "@babel/preset-typescript": "^8.0.1",
+    "@next/eslint-plugin-next": "^16.2.12",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "@typescript-eslint/parser": "^8.65.0",
     "eslint": "latest",
     "eslint-config-next": "latest",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "typescript": "latest"
+  },
+  "pnpm": {
+    "overrides": {
+      "@typescript-eslint/parser>typescript": "6.0.2",
+      "@typescript-eslint/typescript-estree>typescript": "6.0.2",
+      "typescript-eslint>typescript": "6.0.2"
+    }
   }
 }

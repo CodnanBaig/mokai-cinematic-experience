@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowDownRight, ArrowUpRight, MapPin, Phone, Sparkles } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, MapPin, Menu, Phone, Sparkles, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -61,15 +61,38 @@ function Loader({ done }: { done: () => void }) {
 }
 
 function Navigation() {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.classList.toggle("nav-open", open);
+    return () => document.body.classList.remove("nav-open");
+  }, [open]);
+
+  useEffect(() => {
+    const close = () => setOpen(false);
+    window.addEventListener("hashchange", close);
+    return () => window.removeEventListener("hashchange", close);
+  }, []);
+
   return (
     <header className="nav-shell">
       <a className="nav-logo" href="#top" aria-label="Mokai home"><BrandMark compact /></a>
-      <nav aria-label="Primary navigation">
-        <a href="#story">Story</a>
-        <a href="#spaces">Spaces</a>
-        <a href="#menu">Menu</a>
+      <button
+        type="button"
+        className="nav-toggle"
+        aria-expanded={open}
+        aria-controls="site-nav"
+        onClick={() => setOpen((value) => !value)}
+      >
+        {open ? <X size={18} aria-hidden="true" /> : <Menu size={18} aria-hidden="true" />}
+        <span>{open ? "Close" : "Menu"}</span>
+      </button>
+      <nav id="site-nav" className={open ? "is-open" : ""} aria-label="Primary navigation">
+        <a href="#story" onClick={() => setOpen(false)}>Story</a>
+        <a href="#spaces" onClick={() => setOpen(false)}>Spaces</a>
+        <a href="#menu" onClick={() => setOpen(false)}>Menu</a>
       </nav>
-      <a className="pill" href="#visit">Visit <ArrowUpRight size={16} /></a>
+      <a className="pill nav-visit" href="#visit" onClick={() => setOpen(false)}>Visit <ArrowUpRight size={16} /></a>
     </header>
   );
 }
@@ -106,14 +129,21 @@ export default function Experience() {
     if (!loaded || !root.current) return;
     gsap.registerPlugin(ScrollTrigger);
 
-    const lenis = new Lenis({ duration: 1.15, smoothWheel: true, wheelMultiplier: 0.85 });
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const useSmoothScroll = window.matchMedia("(pointer: fine)").matches && !prefersReducedMotion;
+
+    let lenis: Lenis | null = null;
     let frame = 0;
-    const raf = (time: number) => {
-      lenis.raf(time);
+
+    if (useSmoothScroll) {
+      lenis = new Lenis({ duration: 1.15, smoothWheel: true, wheelMultiplier: 0.85 });
+      const raf = (time: number) => {
+        lenis?.raf(time);
+        frame = requestAnimationFrame(raf);
+      };
       frame = requestAnimationFrame(raf);
-    };
-    frame = requestAnimationFrame(raf);
-    lenis.on("scroll", ScrollTrigger.update);
+      lenis.on("scroll", ScrollTrigger.update);
+    }
 
     const context = gsap.context(() => {
       gsap.from(".nav-shell", { y: -30, opacity: 0, duration: 0.9, ease: "power3.out" });
@@ -170,8 +200,8 @@ export default function Experience() {
     }, root);
 
     return () => {
-      cancelAnimationFrame(frame);
-      lenis.destroy();
+      if (frame) cancelAnimationFrame(frame);
+      lenis?.destroy();
       context.revert();
     };
   }, [loaded]);
@@ -195,7 +225,7 @@ export default function Experience() {
             <Image src="/images/mokai-exterior.webp" alt="Mokai's illustrated Bandra facade" fill priority loading="eager" sizes="(max-width: 900px) 88vw, 34vw" />
             <div className="image-label"><span>THE ORIGINAL WAVE</span><span>CHAPEL ROAD / 2024</span></div>
           </div>
-          <div className="hero-sidecopy">MOKA = COFFEE<br />AI = LOVE</div>
+          {/* <div className="hero-sidecopy">MOKA = COFFEE<br />AI = LOVE</div> */}
         </section>
 
         <Marquee />
@@ -234,7 +264,7 @@ export default function Experience() {
             <p className="eyebrow">A SERIES OF MOMENTS</p>
             <h2>Discover it<br />slowly.</h2>
           </div>
-          <div className="rooms-track">
+          <div className="rooms-track" data-scroll-hint="Swipe through the rooms">
             {rooms.map((room) => (
               <article className="room-card" key={room.title}>
                 <div className="room-card__image frame"><Image src={room.image} alt={room.title} fill sizes="(max-width: 900px) 86vw, 42vw" /></div>
@@ -252,7 +282,14 @@ export default function Experience() {
           <div className="menu-grid">
             <div className="menu-list">
               {menu.map(([title, description], index) => (
-                <button key={title} onMouseEnter={() => setActiveMenu(index)} onFocus={() => setActiveMenu(index)} className={activeMenu === index ? "is-active" : ""}>
+                <button
+                  key={title}
+                  type="button"
+                  onMouseEnter={() => setActiveMenu(index)}
+                  onFocus={() => setActiveMenu(index)}
+                  onClick={() => setActiveMenu(index)}
+                  className={activeMenu === index ? "is-active" : ""}
+                >
                   <span className="menu-index">0{index + 1}</span>
                   <span><strong>{title}</strong><small>{description}</small></span>
                   <ArrowUpRight size={22} />
