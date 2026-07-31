@@ -1,0 +1,1 @@
+This source code is supplied as a design prototype. Mokai's name and third-party editorial photography are not relicensed by this package. Confirm brand and image permissions before public or commercial deployment.
