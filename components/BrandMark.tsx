@@ -1,11 +1,15 @@
-export default function BrandMark({ compact = false }: { compact?: boolean }) {
+import Image from "next/image";
+
+export default function BrandMark({ compact = false, light = false }: { compact?: boolean; light?: boolean }) {
   return (
-    <div className={compact ? "brand brand--compact" : "brand"} aria-label="Mokai">
-      <span>M</span>
-      <span>O</span>
-      <span>K</span>
-      <span>A</span>
-      <span>I</span>
-    </div>
+    <span className={`brand ${compact ? "brand--compact" : ""} ${light ? "brand--light" : ""}`} aria-label="Mokai">
+      <Image
+        src="/brand/mokai-horizontal.svg"
+        alt="Mokai"
+        width={300}
+        height={300}
+        priority={compact}
+      />
+    </span>
   );
 }

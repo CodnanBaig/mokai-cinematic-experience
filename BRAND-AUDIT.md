@@ -4,11 +4,22 @@
 
 Mokai is positioned less as a transactional café and more as a designed pause: food, coffee, matcha, interiors and participation are treated as one emotional experience.
 
-## Publicly visible cues translated into the website
+## Brand-system assets applied
+
+The site now uses the supplied Mokai identity files from the shared brand folder:
+
+- `public/brand/mokai-horizontal.svg` — official horizontal wordmark
+- `public/brand/mokai-with-hanko.svg` — official wordmark and hanko lockup
+- `public/brand/mokai-hanko-filled.svg` — official filled hanko mark
+- `public/fonts/Kobe-Regular.ttf` — logo, title and signage face
+- `public/fonts/Cy-Regular.ttf`, `Cy-SemiBold.ttf`, `Cy-Black.ttf` — supporting brand face
+- `public/images/brand/backdrop-*.webp` — optimized crops of supplied print backdrops
+
+## Brand cues translated into the website
 
 - Japanese minimalism interrupted by Harajuku-style colour and graphic energy
 - Warm timber, brass, curved forms, arched windows and imperfect tactile surfaces
-- Ube pink, sea/aqua blue, coffee brown, warm cream and matcha green
+- Graphite `#333232`, Coffee `#3E2B2E`, Latte `#A5856A`, Dalgona `#C7AC7F`, Parchment `#E6D9C6`, Sakura `#F3DFD5`, Ube `#C964CF` and Brass `#C7AC7F`
 - Moka-pot and wave imagery
 - Hanko/seal-inspired graphic language
 - Origami birds as a metaphor for movement and cultural exchange
@@ -17,16 +28,11 @@ Mokai is positioned less as a transactional café and more as a designed pause: 
 
 ## Typography decision
 
-No verified public download or official specification for Mokai's production typefaces was found. The prototype therefore uses:
-
-- Display sans: Arial Narrow / Helvetica Neue / Arial
-- Editorial serif: Iowan Old Style / Baskerville / Times New Roman
-
-These are intentionally system-based to keep the project self-contained. Replace with licensed brand fonts after receiving Mokai's official identity files.
+Kobe is used for display typography, while Cy is used for body copy, labels and navigation, matching the supplied visual-language guide. The fonts are self-hosted locally for this project; confirm the final webfont licensing terms before public launch.
 
 ## Logo decision
 
-The vertical M-O-K-A-I word treatment is recreated typographically in code. The abstract seal in `public/brand/hanko.svg` is an original prototype element inspired by public descriptions of Mokai's moka-pot hanko; it is not a traced official logo.
+The supplied horizontal wordmark and hanko artwork replace the earlier typographic wordmark and prototype seal. The logo is cropped responsively from the official square artwork so it remains crisp in the loader, navigation and footer.
 
 ## Content architecture
 
@@ -38,12 +44,10 @@ The vertical M-O-K-A-I word treatment is recreated typographically in code. The 
 6. Cinematic image interlude
 7. Current Pali Hill visit information
 
-## Production asset request list
+## Remaining production handoff requests
 
 Before launch, request the following directly from Mokai:
 
-- Master logo files: SVG, PDF, monochrome and colour versions
-- Official font names and webfont licences
 - Current Pali Hill architectural photographs in landscape and portrait crops
 - Approved menu and pricing data
 - Reservation/order destination

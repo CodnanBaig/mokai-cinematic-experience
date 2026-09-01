@@ -53,7 +53,7 @@ function Loader({ done }: { done: () => void }) {
 
   return (
     <div className="loader" aria-hidden="true">
-      <div className="loader__mark"><BrandMark /></div>
+      <div className="loader__mark"><BrandMark light /></div>
       <div className="loader__line"><span style={{ width: `${count}%` }} /></div>
       <div className="loader__meta"><span>Bandra / Mumbai</span><span>{count.toString().padStart(3, "0")}</span></div>
     </div>
@@ -232,7 +232,7 @@ export default function Experience() {
 
         <section className="manifesto section-pad" id="story">
           <div className="manifesto-stamp" data-reveal>
-            <Image src="/brand/hanko.svg" width={160} height={160} alt="Abstract Mokai seal" />
+            <Image src="/brand/mokai-hanko-filled.svg" width={160} height={160} alt="Mokai hanko mark" />
           </div>
           <div className="manifesto-copy">
             <p className="eyebrow" data-reveal>NOT A QUICK COFFEE</p>
@@ -334,7 +334,7 @@ export default function Experience() {
       </main>
 
       <footer className="footer section-pad">
-        <div className="footer-logo"><BrandMark /></div>
+        <div className="footer-logo"><BrandMark light /></div>
         <p>Indian-made. Asian-inspired.<br />Experienced in Bandra.</p>
         <div className="footer-links"><a href="https://www.instagram.com/mokaiindia/" target="_blank" rel="noreferrer">Instagram</a><a href="#top">Back to top</a></div>
         <small>Independent concept website · Public information and editorial imagery used for demonstration.</small>

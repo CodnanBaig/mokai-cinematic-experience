@@ -35,9 +35,7 @@ Next.js App Router, TypeScript, GSAP, Lenis, Three.js, React Three Fiber, Drei a
 
 ## Art direction
 
-The palette was sampled visually from Mokai's public spaces and editorial photography: warm paper, matcha green, ube pink, oxidised rust and aqua. The typography uses high-contrast system serif/sans fallbacks so the build remains self-contained. Replace these with Mokai's licensed production fonts when supplied by the brand.
-
-The included abstract hanko is an original concept mark for this prototype, inspired by the public description of Mokai's moka-pot seal. It is not presented as the official logo artwork.
+The implementation uses the supplied Mokai visual-language system: Kobe for display, Cy for supporting typography, the Graphite/Coffee/Kraft/Sakura/Ube palette, the official wordmark and hanko lockups, and optimized versions of the supplied backdrop artwork. The local font files and identity artwork should still be cleared for web distribution with the brand before launch.
 
 ## Public research references
 
