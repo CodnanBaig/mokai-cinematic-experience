@@ -285,6 +285,7 @@ export default function Experience() {
                 <button
                   key={title}
                   type="button"
+                  aria-pressed={activeMenu === index}
                   onMouseEnter={() => setActiveMenu(index)}
                   onFocus={() => setActiveMenu(index)}
                   onClick={() => setActiveMenu(index)}
@@ -334,7 +335,10 @@ export default function Experience() {
       </main>
 
       <footer className="footer section-pad">
-        <div className="footer-logo"><BrandMark light /></div>
+        <div className="footer-logo">
+          <BrandMark light />
+          <Image className="footer-lockup" src="/brand/mokai-with-hanko.svg" width={112} height={112} alt="" aria-hidden="true" />
+        </div>
         <p>Indian-made. Asian-inspired.<br />Experienced in Bandra.</p>
         <div className="footer-links"><a href="https://www.instagram.com/mokaiindia/" target="_blank" rel="noreferrer">Instagram</a><a href="#top">Back to top</a></div>
         <small>Independent concept website · Public information and editorial imagery used for demonstration.</small>
