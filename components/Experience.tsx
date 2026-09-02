@@ -103,7 +103,12 @@ function Marquee() {
     <div className="marquee" aria-label="Mokai values">
       <div className="marquee__track">
         {[...words, ...words].map((word, index) => (
-          <span key={`${word}-${index}`}>{word}<i>✦</i></span>
+          <span key={`${word}-${index}`}>
+            {word}
+            <span className="marquee-mark" aria-hidden="true">
+              <Image className="marquee-mark__image" src="/brand/mokai-hanko-filled.svg" alt="" width={300} height={300} />
+            </span>
+          </span>
         ))}
       </div>
     </div>
@@ -191,12 +196,14 @@ export default function Experience() {
         });
       }
 
-      gsap.to(".ritual-ring", {
-        rotate: 360,
-        duration: 18,
-        repeat: -1,
-        ease: "none"
-      });
+      if (!prefersReducedMotion) {
+        gsap.to(".ritual-ring", {
+          rotate: 360,
+          duration: 18,
+          repeat: -1,
+          ease: "none"
+        });
+      }
     }, root);
 
     return () => {
@@ -245,10 +252,18 @@ export default function Experience() {
         </section>
 
         <section className="ritual section-pad">
-          <div className="ritual-visual" data-reveal>
-            <div className="ritual-ring">
-              <span>WHISK · WATCH · WAIT · SIP · </span>
-            </div>
+          <div className="ritual-visual" data-reveal aria-label="Matcha ritual: whisk, watch, wait, sip">
+            <svg className="ritual-ring" viewBox="0 0 100 100" aria-hidden="true">
+              <defs>
+                <path id="ritual-orbit-path" d="M 50,7 a 43,43 0 1,1 0,86 a 43,43 0 1,1 0,-86" />
+              </defs>
+              <circle className="ritual-ring__line" cx="50" cy="50" r="43" />
+              <text className="ritual-ring__text">
+                <textPath href="#ritual-orbit-path" startOffset="70%">WHISK · WATCH · WAIT · SIP ·</textPath>
+              </text>
+              <circle className="ritual-ring__dot" cx="50" cy="7" r="1.35" />
+              <circle className="ritual-ring__dot" cx="50" cy="93" r="1.35" />
+            </svg>
             <div className="ritual-core"><span>抹茶</span><small>MATCHA</small></div>
           </div>
           <div className="ritual-copy">
@@ -335,13 +350,19 @@ export default function Experience() {
       </main>
 
       <footer className="footer section-pad">
-        <div className="footer-logo">
-          <BrandMark light />
-          <Image className="footer-lockup" src="/brand/mokai-with-hanko.svg" width={112} height={112} alt="" aria-hidden="true" />
+        <div className="footer-top">
+          <div className="footer-logo">
+            <div className="footer-lockup" aria-hidden="true">
+              <Image className="footer-lockup__image" src="/brand/mokai-with-hanko.svg" width={300} height={300} alt="" />
+            </div>
+            <BrandMark light />
+          </div>
+          <p>Indian-made. Asian-inspired.<br />Experienced in Bandra.</p>
         </div>
-        <p>Indian-made. Asian-inspired.<br />Experienced in Bandra.</p>
-        <div className="footer-links"><a href="https://www.instagram.com/mokaiindia/" target="_blank" rel="noreferrer">Instagram</a><a href="#top">Back to top</a></div>
-        <small>Independent concept website · Public information and editorial imagery used for demonstration.</small>
+        <div className="footer-bottom">
+          <div className="footer-links"><a href="https://www.instagram.com/mokaiindia/" target="_blank" rel="noreferrer">Instagram</a><a href="#top">Back to top</a></div>
+          <small>Independent concept website · Public information and editorial imagery used for demonstration.</small>
+        </div>
       </footer>
     </div>
   );
