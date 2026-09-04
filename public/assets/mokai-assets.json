@@ -1,0 +1,103 @@
+{
+  "brand": {
+    "svg": [
+      "/brand/mokai-horizontal.svg",
+      "/brand/mokai-with-hanko.svg",
+      "/brand/mokai-with-hanko-filled.svg",
+      "/brand/mokai-hanko.svg",
+      "/brand/mokai-hanko-filled.svg"
+    ],
+    "png": [
+      "/brand/raster/mokai-horizontal.png",
+      "/brand/raster/mokai-with-hanko.png",
+      "/brand/raster/mokai-with-hanko-filled.png",
+      "/brand/raster/mokai-hanko.png",
+      "/brand/raster/mokai-hanko-filled.png"
+    ]
+  },
+  "fonts": {
+    "cy": [
+      {
+        "path": "/fonts/Cy-Thin.ttf",
+        "weight": 100
+      },
+      {
+        "path": "/fonts/Cy-ExtraLight.ttf",
+        "weight": 200
+      },
+      {
+        "path": "/fonts/Cy-Light.ttf",
+        "weight": 300
+      },
+      {
+        "path": "/fonts/Cy-Regular.ttf",
+        "weight": 400
+      },
+      {
+        "path": "/fonts/Cy-SemiLight.ttf",
+        "weight": 500
+      },
+      {
+        "path": "/fonts/Cy-SemiBold.ttf",
+        "weight": 600
+      },
+      {
+        "path": "/fonts/Cy-Bold.ttf",
+        "weight": 700
+      },
+      {
+        "path": "/fonts/Cy-ExtraBold.ttf",
+        "weight": 800
+      },
+      {
+        "path": "/fonts/Cy-Black.ttf",
+        "weight": 900
+      }
+    ],
+    "kobe": [
+      {
+        "path": "/fonts/Kobe-Regular.ttf",
+        "format": "truetype"
+      },
+      {
+        "path": "/fonts/Kobe.otf",
+        "format": "opentype"
+      }
+    ]
+  },
+  "backdrops": [
+    "/images/brand/backdrop-01.webp",
+    "/images/brand/backdrop-02.webp",
+    "/images/brand/backdrop-03.webp",
+    "/images/brand/backdrop-04.webp",
+    "/images/brand/backdrop-05.webp",
+    "/images/brand/backdrop-06.webp",
+    "/images/brand/backdrop-07.webp",
+    "/images/brand/backdrop-08.webp",
+    "/images/brand/backdrop-09.webp",
+    "/images/brand/backdrop-10.webp"
+  ],
+  "restroomPosters": [
+    "/images/brand/restroom/poster-01.webp",
+    "/images/brand/restroom/poster-02.webp",
+    "/images/brand/restroom/poster-03.webp",
+    "/images/brand/restroom/poster-04.webp",
+    "/images/brand/restroom/poster-05.webp",
+    "/images/brand/restroom/poster-06.webp",
+    "/images/brand/restroom/poster-07.webp",
+    "/images/brand/restroom/poster-08.webp",
+    "/images/brand/restroom/poster-09.webp",
+    "/images/brand/restroom/poster-10.webp"
+  ],
+  "interiors": [
+    "/images/brand/interiors/frame-01.webp",
+    "/images/brand/interiors/frame-02.webp",
+    "/images/brand/interiors/frame-03.webp",
+    "/images/brand/interiors/jute-bag-display.webp"
+  ],
+  "models": {
+    "obj": "/models/mokai-logo.obj",
+    "mtl": "/models/mokai-logo.mtl",
+    "stl": "/models/mokai-logo.stl"
+  }
+}
