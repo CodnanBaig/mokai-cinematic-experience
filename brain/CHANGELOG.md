@@ -1,5 +1,8 @@
 # Changelog
 
+## v2026.09.04-2224-commit-gate
+- Shipped shared SiteNav/SiteFooter, scroll motion, asset variety, and nav fixes after build + lint; lint fixes for SiteNav path reset and useScrollMotion extras ref.
+
 ## v2026.09.04-2220-nav-menu-removed
 - Removed Menu from the shared SiteNav; links are Story, Spaces, Join our team, Contact, plus Visit.
 
