@@ -99,5 +99,10 @@
     "obj": "/models/mokai-logo.obj",
     "mtl": "/models/mokai-logo.mtl",
     "stl": "/models/mokai-logo.stl"
-  }
+  },
+  "collateral": [
+    "/images/brand/collateral/bottom-cup-sticker-mockup.webp",
+    "/images/brand/collateral/takeaway-bag-mockup.webp",
+    "/images/brand/collateral/dessert-box-artwork.webp"
+  ]
 }

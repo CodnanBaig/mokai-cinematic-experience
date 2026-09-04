@@ -12,6 +12,7 @@ Source: the shared Mokai Google Drive frontend-design handoff.
 - `public/images/brand/backdrop-01.webp` … `backdrop-10.webp` — full photography-backdrop set.
 - `public/images/brand/restroom/poster-01.webp` … `poster-10.webp` — full restroom-poster artwork set.
 - `public/images/brand/interiors/*.webp` — reusable interior-frame and jute-bag artwork.
+- `public/images/brand/collateral/*.webp` — reusable takeaway-bag, cup-sticker and dessert-box collateral artwork/mockups.
 - `public/assets/mokai-assets.json` — canonical public URLs for frontend consumption.
 
 ## Web extraction / optimization
