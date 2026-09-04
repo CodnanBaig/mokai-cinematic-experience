@@ -1,4 +1,4 @@
-.page { position: relative; min-height: 100vh; overflow: hidden; background: var(--paper); color: var(--ink); }
+.page { position: relative; min-height: 100vh; overflow-x: clip; background: var(--paper); color: var(--ink); }
 .grain { position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: .09; background-image: url('/textures/noise.svg'); mix-blend-mode: multiply; }
 .eyebrow { margin: 0; font-size: 10px; line-height: 1.4; letter-spacing: .24em; font-weight: 700; text-transform: uppercase; }
 
@@ -17,8 +17,8 @@
   position: absolute;
   z-index: -2;
   inset: 0 0 0 44%;
-  background: url('/images/brand/backdrop-05.webp') center / cover no-repeat;
-  opacity: .12;
+  background: url('/images/brand/backdrop-08.webp') center / cover no-repeat;
+  opacity: .13;
   mix-blend-mode: multiply;
 }
 .hero::after {
@@ -52,6 +52,26 @@
 .stamp { position: absolute; right: 0; bottom: 0; width: clamp(110px, 11vw, 168px); aspect-ratio: 1; display: grid; place-items: center; border-radius: 50%; background: var(--matcha-dark); box-shadow: 0 18px 48px rgba(62,43,46,.2); }
 .stamp img { width: 62%; height: auto; filter: brightness(0) invert(1); }
 
+.markStrip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  padding: 16px clamp(22px, 4vw, 72px);
+  background: var(--ink);
+}
+.markFrame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--matcha-dark);
+}
+.markFrame img { object-fit: cover; transition: transform .55s cubic-bezier(0.16, 1, 0.3, 1); }
+.markFrame:hover img { transform: scale(1.05); }
+@media (prefers-reduced-motion: reduce) {
+  .markFrame img { transition: none; }
+  .markFrame:hover img { transform: none; }
+}
+
 .contactGrid {
   display: grid;
   grid-template-columns: minmax(320px, .82fr) minmax(0, 1.18fr);
@@ -59,7 +79,27 @@
   border-top: 1px solid rgba(51,50,50,.24);
   background: var(--parchment);
 }
-.details { padding: clamp(72px, 8vw, 118px) clamp(22px, 4vw, 72px); border-right: 1px solid rgba(51,50,50,.24); }
+.details {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(72px, 8vw, 118px) clamp(22px, 4vw, 72px);
+  border-right: 1px solid rgba(51,50,50,.24);
+}
+.details::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  width: min(50vw, 520px);
+  height: min(50vw, 520px);
+  left: -22vw;
+  bottom: -18vw;
+  background: url('/images/brand/backdrop-02.webp') center / cover no-repeat;
+  opacity: .1;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.details > * { position: relative; z-index: 1; }
 .details h2 { margin: 18px 0 52px; max-width: 10ch; font-family: var(--serif); font-size: clamp(50px, 5.5vw, 82px); line-height: .86; letter-spacing: -.045em; font-weight: 400; text-transform: uppercase; }
 .detailList { display: flex; flex-direction: column; gap: 30px; }
 .detailList > div { display: grid; grid-template-columns: 28px 1fr; gap: 16px; align-items: start; padding-top: 20px; border-top: 1px solid rgba(51,50,50,.2); }
@@ -85,8 +125,8 @@
   height: min(42vw, 620px);
   right: -18vw;
   top: -14vw;
-  background: url('/images/brand/backdrop-06.webp') center / cover no-repeat;
-  opacity: .12;
+  background: url('/images/brand/backdrop-10.webp') center / cover no-repeat;
+  opacity: .14;
   mix-blend-mode: multiply;
 }
 .formHeader { margin-bottom: 54px; }
@@ -99,6 +139,7 @@
   .heroCopy h1 { font-size: clamp(64px, 17vw, 104px); }
   .heroCopy h1 em, .heroCopy > p:last-child { margin-left: 0; }
   .heroVisual { min-height: 590px; width: min(100%, 620px); justify-self: center; }
+  .markStrip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .contactGrid { grid-template-columns: 1fr; }
   .details { border-right: 0; border-bottom: 1px solid rgba(51,50,50,.24); }
   .detailArt { min-height: 520px; max-width: 620px; }

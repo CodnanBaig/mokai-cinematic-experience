@@ -1,31 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import BrandMark from "./BrandMark";
-import styles from "./subpage-chrome.module.css";
+import styles from "./site-footer.module.css";
 
-type ActivePage = "join" | "contact";
-
-export function SubpageNav({ active }: { active: ActivePage }) {
-  return (
-    <header className={styles.nav}>
-      <Link className={styles.logo} href="/" aria-label="Mokai home">
-        <BrandMark compact />
-      </Link>
-      <nav className={styles.links} aria-label="Secondary navigation">
-        <Link href="/#story">Story</Link>
-        <Link href="/#spaces">Spaces</Link>
-        <Link className={active === "join" ? styles.active : undefined} href="/join-our-team">Join our team</Link>
-        <Link className={active === "contact" ? styles.active : undefined} href="/contact">Contact</Link>
-      </nav>
-      <Link className={styles.homeLink} href="/">
-        Home <ArrowUpRight size={15} aria-hidden="true" />
-      </Link>
-    </header>
-  );
-}
-
-export function SubpageFooter() {
+export default function SiteFooter() {
   return (
     <footer className={styles.footer}>
       <div className={styles.footerTop}>

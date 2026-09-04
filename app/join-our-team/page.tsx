@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
-import { SubpageFooter, SubpageNav } from "@/components/SubpageChrome";
+import PageMotion from "@/components/PageMotion";
+import SiteFooter from "@/components/SiteFooter";
+import SiteNav from "@/components/SiteNav";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -19,13 +21,13 @@ const teams = [
 
 export default function JoinOurTeamPage() {
   return (
-    <div className={styles.page} id="top">
+    <PageMotion className={styles.page} id="top">
       <div className={styles.grain} aria-hidden="true" />
-      <SubpageNav active="join" />
+      <SiteNav />
 
       <main>
         <section className={styles.hero}>
-          <div className={styles.heroCopy}>
+          <div className={styles.heroCopy} data-hero-animate>
             <p className={styles.eyebrow}>WORK WITH MOKAI · BANDRA</p>
             <h1>BRING YOUR<br /><em>THING.</em></h1>
             <p className={styles.intro}>We like people with a point of view, a generous spirit and enough curiosity to care about the tiny things.</p>
@@ -34,38 +36,68 @@ export default function JoinOurTeamPage() {
             </Link>
           </div>
 
-          <div className={styles.heroArt}>
-            <div className={styles.heroPoster}>
-              <Image src="/images/brand/restroom/poster-07.webp" alt="Mokai graphic artwork" fill priority sizes="(max-width: 900px) 76vw, 32vw" />
+          <div className={styles.heroArt} data-reveal="clip">
+            <div className={styles.heroPoster} data-parallax-wrap>
+              <Image
+                src="/images/brand/restroom/poster-03.webp"
+                alt="Mokai graphic artwork"
+                fill
+                priority
+                sizes="(max-width: 900px) 76vw, 32vw"
+                data-parallax
+                data-speed="-16"
+              />
             </div>
-            <div className={styles.heroPhoto}>
-              <Image src="/images/mokai-first-floor.webp" alt="Mokai interior" fill priority sizes="(max-width: 900px) 68vw, 28vw" />
+            <div className={styles.heroPhoto} data-parallax-wrap>
+              <Image
+                src="/images/brand/interiors/frame-01.webp"
+                alt="Mokai interior"
+                fill
+                priority
+                sizes="(max-width: 900px) 68vw, 28vw"
+                data-parallax
+                data-speed="-10"
+              />
             </div>
-            <Image className={styles.hanko} src="/brand/mokai-hanko-filled.svg" alt="" width={180} height={180} aria-hidden="true" />
+            <Image className={styles.hanko} src="/brand/mokai-hanko-filled.svg" alt="" width={180} height={180} aria-hidden="true" data-reveal="scale" />
           </div>
         </section>
 
         <section className={styles.statement}>
-          <div className={styles.statementMark}>
-            <Image src="/brand/mokai-with-hanko-filled.svg" alt="Mokai mark" width={300} height={300} />
+          <div className={styles.statementMark} data-reveal="scale" data-parallax-wrap>
+            <Image src="/brand/mokai-with-hanko-filled.svg" alt="Mokai mark" width={300} height={300} data-parallax data-speed="-8" data-scale="1" />
           </div>
           <div className={styles.statementCopy}>
-            <p className={styles.eyebrow}>NOT JUST ANOTHER SHIFT</p>
-            <h2>MAKE THE ROOM<br /><em>feel better.</em></h2>
-            <p>Mokai is built around slow attention: to the coffee, the food, the guest, the room and each other. Skill matters. So does how you make people feel while using it.</p>
+            <p className={styles.eyebrow} data-reveal="right">NOT JUST ANOTHER SHIFT</p>
+            <h2 data-scrub="fade-scale">MAKE THE ROOM<br /><em>feel better.</em></h2>
+            <p data-reveal="right">Mokai is built around slow attention: to the coffee, the food, the guest, the room and each other. Skill matters. So does how you make people feel while using it.</p>
           </div>
+        </section>
+
+        <section className={styles.posterStrip} aria-label="Mokai visual language" data-reveal-stagger>
+          {[
+            "/images/brand/restroom/poster-01.webp",
+            "/images/brand/restroom/poster-05.webp",
+            "/images/brand/restroom/poster-08.webp",
+            "/images/brand/restroom/poster-10.webp",
+            "/images/brand/restroom/poster-02.webp",
+          ].map((src) => (
+            <div className={styles.posterFrame} key={src} data-parallax-wrap>
+              <Image src={src} alt="" fill sizes="(max-width: 900px) 42vw, 18vw" data-parallax data-speed="-12" />
+            </div>
+          ))}
         </section>
 
         <section className={styles.teams} id="teams">
           <header className={styles.teamsHeader}>
             <div>
-              <p className={styles.eyebrow}>WHERE YOU MIGHT FIT</p>
-              <h2>Find your<br />corner.</h2>
+              <p className={styles.eyebrow} data-reveal="left">WHERE YOU MIGHT FIT</p>
+              <h2 data-reveal="left">Find your<br />corner.</h2>
             </div>
-            <p>These are the worlds that make Mokai move. They are not a list of currently open vacancies—just the places where good people can make a difference.</p>
+            <p data-reveal="right">These are the worlds that make Mokai move. They are not a list of currently open vacancies—just the places where good people can make a difference.</p>
           </header>
 
-          <div className={styles.teamGrid}>
+          <div className={styles.teamGrid} data-reveal-stagger>
             {teams.map(([title, body], index) => (
               <article className={styles.teamCard} key={title}>
                 <span>0{index + 1}</span>
@@ -77,21 +109,30 @@ export default function JoinOurTeamPage() {
         </section>
 
         <section className={styles.culture}>
-          <div className={styles.cultureImage}>
-            <Image src="/images/brand/backdrop-04.webp" alt="Mokai visual language artwork" fill sizes="(max-width: 900px) 100vw, 48vw" />
+          <div className={styles.cultureImage} data-reveal="clip" data-parallax-wrap>
+            <Image
+              src="/images/brand/collateral/takeaway-bag-mockup.webp"
+              alt="Mokai takeaway bag with brand artwork"
+              fill
+              sizes="(max-width: 900px) 100vw, 48vw"
+              data-parallax
+              data-speed="-18"
+            />
           </div>
           <div className={styles.cultureCopy}>
-            <p className={styles.eyebrow}>CRAFT · CURIOSITY · CARE</p>
-            <h2>GOOD ENERGY,<br /><em>properly made.</em></h2>
-            <p>You do not need to fit a template. Tell us what you are good at, what you want to learn and why Mokai feels like your kind of place.</p>
-            <Link className={styles.cta} href="/contact?type=careers">
+            <p className={styles.eyebrow} data-reveal="right">CRAFT · CURIOSITY · CARE</p>
+            <h2 data-reveal="right">GOOD ENERGY,<br /><em>properly made.</em></h2>
+            <p data-reveal="right">You do not need to fit a template. Tell us what you are good at, what you want to learn and why Mokai feels like your kind of place.</p>
+            <Link className={styles.cta} href="/contact?type=careers" data-reveal="right">
               Introduce yourself <ArrowUpRight size={17} aria-hidden="true" />
             </Link>
           </div>
         </section>
       </main>
 
-      <SubpageFooter />
-    </div>
+      <div data-reveal>
+        <SiteFooter />
+      </div>
+    </PageMotion>
   );
 }

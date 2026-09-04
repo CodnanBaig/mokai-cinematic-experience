@@ -1,63 +1,3 @@
-.nav {
-  position: fixed;
-  z-index: 100;
-  top: max(18px, env(safe-area-inset-top));
-  left: clamp(18px, 3vw, 48px);
-  right: clamp(18px, 3vw, 48px);
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 14px;
-  pointer-events: none;
-}
-
-.nav > * { pointer-events: auto; }
-.logo { justify-self: start; }
-
-.links {
-  display: flex;
-  gap: 26px;
-  padding: 11px 18px;
-  border: 1px solid rgba(51, 50, 50, .2);
-  border-radius: 999px;
-  background: rgba(230, 217, 198, .93);
-  backdrop-filter: blur(14px);
-  font-size: 10px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-}
-
-.links a { position: relative; }
-.links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 100%;
-  bottom: -4px;
-  height: 1px;
-  background: currentColor;
-  transition: right .22s ease;
-}
-.links a:hover::after,
-.links .active::after { right: 0; }
-
-.homeLink {
-  justify-self: end;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  border: 1px solid currentColor;
-  border-radius: 999px;
-  background: rgba(230, 217, 198, .93);
-  backdrop-filter: blur(14px);
-  font-size: 10px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  transition: transform .2s ease, background .2s ease, color .2s ease;
-}
-.homeLink:hover { transform: translateY(-2px); background: var(--ink); color: var(--paper); }
-
 .footer {
   position: relative;
   overflow: hidden;
@@ -77,7 +17,7 @@
   position: absolute;
   z-index: -1;
   inset: -12% -12% -18% 46%;
-  background: linear-gradient(90deg, rgba(51,50,50,.94), rgba(51,50,50,.14)), url('/images/brand/backdrop-03.webp') center / cover no-repeat;
+  background: linear-gradient(90deg, rgba(51,50,50,.94), rgba(51,50,50,.14)), url('/images/brand/backdrop-05.webp') center / cover no-repeat;
   opacity: .18;
   mix-blend-mode: screen;
 }
@@ -124,9 +64,6 @@
 .footerBottom small { max-width: 520px; color: rgba(230,217,198,.66); font-size: 9px; line-height: 1.5; letter-spacing: .08em; text-align: right; }
 
 @media (max-width: 900px) {
-  .nav { grid-template-columns: 1fr auto; }
-  .links { display: none; }
-  .homeLink { grid-column: 2; }
   .footerTop, .footerBottom { display: flex; flex-direction: column; align-items: flex-start; }
   .footerTop > p, .footerBottom small { justify-self: auto; text-align: left; }
   .lockup { width: 100%; }
@@ -134,8 +71,6 @@
 }
 
 @media (max-width: 560px) {
-  .nav { left: 16px; right: 16px; }
-  .homeLink { padding: 10px 13px; }
   .footer { min-height: 340px; }
   .hankoCrop { flex-basis: 50px; width: 50px; }
   .lockup { gap: 14px; }
