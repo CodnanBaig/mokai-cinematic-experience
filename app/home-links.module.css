@@ -1,0 +1,19 @@
+.links {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  padding: 0 clamp(22px, 4vw, 72px) max(28px, env(safe-area-inset-bottom));
+  margin-top: -1px;
+  background: var(--ink);
+  color: var(--paper);
+}
+.links > span { margin-right: auto; color: rgba(230,217,198,.52); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; }
+.links a { display: inline-flex; align-items: center; gap: 8px; padding: 10px 15px; border: 1px solid rgba(230,217,198,.48); border-radius: 999px; font-size: 10px; letter-spacing: .13em; text-transform: uppercase; transition: background .2s ease, color .2s ease, transform .2s ease; }
+.links a:hover { background: var(--paper); color: var(--ink); transform: translateY(-2px); }
+@media (max-width: 560px) {
+  .links { flex-wrap: wrap; justify-content: flex-start; padding-top: 4px; }
+  .links > span { flex: 0 0 100%; margin-bottom: 4px; }
+}
