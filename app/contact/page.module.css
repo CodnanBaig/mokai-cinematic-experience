@@ -1,0 +1,114 @@
+.page { position: relative; min-height: 100vh; overflow: hidden; background: var(--paper); color: var(--ink); }
+.grain { position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: .09; background-image: url('/textures/noise.svg'); mix-blend-mode: multiply; }
+.eyebrow { margin: 0; font-size: 10px; line-height: 1.4; letter-spacing: .24em; font-weight: 700; text-transform: uppercase; }
+
+.hero {
+  position: relative;
+  min-height: 88svh;
+  padding: max(136px, calc(env(safe-area-inset-top) + 108px)) clamp(22px, 4vw, 72px) 76px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, .88fr);
+  align-items: center;
+  gap: clamp(44px, 8vw, 120px);
+  isolation: isolate;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  inset: 0 0 0 44%;
+  background: url('/images/brand/backdrop-05.webp') center / cover no-repeat;
+  opacity: .12;
+  mix-blend-mode: multiply;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: min(46vw, 680px);
+  height: min(46vw, 680px);
+  right: -16vw;
+  bottom: -24vw;
+  border-radius: 50%;
+  background: var(--parchment);
+  opacity: .58;
+}
+.heroCopy h1 {
+  margin: 18px 0 30px;
+  max-width: 7ch;
+  font-family: var(--serif);
+  font-size: clamp(70px, 10vw, 150px);
+  line-height: .75;
+  letter-spacing: -.055em;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+.heroCopy h1 em { margin-left: .6em; color: var(--matcha-dark); font-weight: 400; text-transform: none; }
+.heroCopy > p:last-child { max-width: 510px; margin: 0 0 0 clamp(0px, 7vw, 108px); font-size: clamp(20px, 2vw, 30px); line-height: 1.15; }
+
+.heroVisual { position: relative; min-height: clamp(500px, 62vh, 720px); }
+.heroImage { position: absolute; inset: 0 4% 8% 8%; overflow: hidden; transform: rotate(1.8deg); background: var(--dalgona); box-shadow: 0 30px 80px rgba(62,43,46,.14); }
+.heroImage img { object-fit: cover; }
+.stamp { position: absolute; right: 0; bottom: 0; width: clamp(110px, 11vw, 168px); aspect-ratio: 1; display: grid; place-items: center; border-radius: 50%; background: var(--matcha-dark); box-shadow: 0 18px 48px rgba(62,43,46,.2); }
+.stamp img { width: 62%; height: auto; filter: brightness(0) invert(1); }
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: minmax(320px, .82fr) minmax(0, 1.18fr);
+  align-items: stretch;
+  border-top: 1px solid rgba(51,50,50,.24);
+  background: var(--parchment);
+}
+.details { padding: clamp(72px, 8vw, 118px) clamp(22px, 4vw, 72px); border-right: 1px solid rgba(51,50,50,.24); }
+.details h2 { margin: 18px 0 52px; max-width: 10ch; font-family: var(--serif); font-size: clamp(50px, 5.5vw, 82px); line-height: .86; letter-spacing: -.045em; font-weight: 400; text-transform: uppercase; }
+.detailList { display: flex; flex-direction: column; gap: 30px; }
+.detailList > div { display: grid; grid-template-columns: 28px 1fr; gap: 16px; align-items: start; padding-top: 20px; border-top: 1px solid rgba(51,50,50,.2); }
+.detailList svg { width: 20px; height: 20px; margin-top: 2px; }
+.detailList p { margin: 0; font-size: clamp(18px, 1.45vw, 23px); line-height: 1.25; }
+.detailList strong { font-weight: 600; }
+.detailArt { position: relative; overflow: hidden; min-height: 420px; margin-top: 54px; border-radius: 48% 48% 4px 4px; }
+.detailArt::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(62,43,46,.3), transparent 48%); }
+.detailArt img { object-fit: cover; }
+
+.formPanel {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: clamp(72px, 8vw, 118px) clamp(28px, 7vw, 110px);
+  background: var(--paper);
+}
+.formPanel::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: min(42vw, 620px);
+  height: min(42vw, 620px);
+  right: -18vw;
+  top: -14vw;
+  background: url('/images/brand/backdrop-06.webp') center / cover no-repeat;
+  opacity: .12;
+  mix-blend-mode: multiply;
+}
+.formHeader { margin-bottom: 54px; }
+.formHeader h2 { margin: 18px 0 26px; max-width: 10ch; font-family: var(--serif); font-size: clamp(58px, 6.4vw, 96px); line-height: .82; letter-spacing: -.05em; font-weight: 400; text-transform: uppercase; }
+.formHeader h2 em { color: var(--matcha-dark); font-weight: 400; text-transform: none; }
+.formHeader > p:last-child { max-width: 600px; margin: 0; font-size: clamp(18px, 1.5vw, 24px); line-height: 1.26; }
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; padding-bottom: 92px; }
+  .heroCopy h1 { font-size: clamp(64px, 17vw, 104px); }
+  .heroCopy h1 em, .heroCopy > p:last-child { margin-left: 0; }
+  .heroVisual { min-height: 590px; width: min(100%, 620px); justify-self: center; }
+  .contactGrid { grid-template-columns: 1fr; }
+  .details { border-right: 0; border-bottom: 1px solid rgba(51,50,50,.24); }
+  .detailArt { min-height: 520px; max-width: 620px; }
+}
+
+@media (max-width: 560px) {
+  .heroVisual { min-height: 460px; }
+  .heroImage { inset: 0 0 8% 4%; }
+  .stamp { width: 104px; }
+  .details, .formPanel { padding-top: 76px; padding-bottom: 76px; }
+  .detailArt { min-height: 390px; }
+  .formHeader { margin-bottom: 42px; }
+}
