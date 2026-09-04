@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" fill="none" preserveAspectRatio="xMidYMid slice">
+  <style>
+    .fine { stroke: #F3DFD5; stroke-width: 1; opacity: .16; vector-effect: non-scaling-stroke; }
+    .ube { stroke: #C964CF; stroke-width: 2; opacity: .72; vector-effect: non-scaling-stroke; }
+    .brass { stroke: #C7AC7F; stroke-width: 1.4; opacity: .52; vector-effect: non-scaling-stroke; }
+    .draw { stroke-dasharray: 1500; stroke-dashoffset: 1500; animation: draw 1.05s cubic-bezier(.22,.75,.2,1) forwards; }
+    .draw2 { stroke-dasharray: 900; stroke-dashoffset: 900; animation: draw .92s .12s cubic-bezier(.22,.75,.2,1) forwards; }
+    .orb { transform-origin: 720px 430px; animation: breathe 1.5s ease-in-out infinite alternate; }
+    .waves path:nth-child(2) { animation-delay: .08s; }
+    .waves path:nth-child(3) { animation-delay: .16s; }
+    .waves path:nth-child(4) { animation-delay: .24s; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @keyframes breathe { from { transform: scale(.96); opacity: .55; } to { transform: scale(1.025); opacity: .9; } }
+    @media (prefers-reduced-motion: reduce) {
+      .draw,.draw2,.orb { animation: none; stroke-dashoffset: 0; }
+    }
+  </style>
+
+  <!-- Shoji-inspired structure: intentionally abstract, using Mokai colours only. -->
+  <g class="fine draw">
+    <path d="M0 168H1440M0 450H1440M0 732H1440"/>
+    <path d="M176 0V900M438 0V900M1002 0V900M1264 0V900"/>
+    <path d="M0 84H438M1002 816H1440"/>
+    <path d="M307 0V168M1133 732V900"/>
+  </g>
+
+  <!-- Offset sun/orbit geometry. -->
+  <g class="orb">
+    <circle class="ube draw2" cx="720" cy="430" r="178"/>
+    <circle class="fine draw2" cx="720" cy="430" r="210"/>
+    <path class="brass draw2" d="M720 194V666M484 430H956"/>
+  </g>
+
+  <!-- Brush-like travelling strokes. -->
+  <path class="ube draw" d="M112 575C302 486 405 519 553 574C703 629 845 635 1040 530C1152 469 1257 465 1360 510"/>
+  <path class="brass draw2" d="M90 601C270 544 401 571 531 616C694 673 870 671 1030 590C1163 523 1285 522 1385 551"/>
+
+  <!-- Seigaiha-referencing arcs, kept minimal rather than illustrative. -->
+  <g class="waves">
+    <path class="fine draw2" d="M40 824C92 752 144 752 196 824C248 752 300 752 352 824C404 752 456 752 508 824"/>
+    <path class="fine draw2" d="M932 92C984 20 1036 20 1088 92C1140 20 1192 20 1244 92C1296 20 1348 20 1400 92"/>
+    <path class="ube draw2" d="M70 850C116 794 162 794 208 850C254 794 300 794 346 850"/>
+    <path class="brass draw2" d="M1094 119C1138 68 1182 68 1226 119C1270 68 1314 68 1358 119"/>
+  </g>
+</svg>
