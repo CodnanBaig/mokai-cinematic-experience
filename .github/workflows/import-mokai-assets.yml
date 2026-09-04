@@ -1,0 +1,56 @@
+name: Import Mokai frontend assets
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/import-mokai-assets.yml"
+      - "scripts/import_mokai_assets.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import-assets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install asset tooling
+        run: python -m pip install --disable-pip-version-check gdown==5.2.0 Pillow==11.3.0
+
+      - name: Import and optimize Drive assets
+        run: python scripts/import_mokai_assets.py
+
+      - name: Validate frontend asset set
+        run: |
+          test -f public/assets/mokai-assets.json
+          test -f public/brand/mokai-with-hanko-filled.svg
+          test -f public/fonts/Cy-Thin.ttf
+          test -f public/fonts/Cy-ExtraBold.ttf
+          test -f public/models/mokai-logo.obj
+          test -f public/images/brand/backdrop-10.webp
+          test -f public/images/brand/restroom/poster-10.webp
+          test -f public/images/brand/interiors/frame-03.webp
+
+      - name: Commit extracted frontend assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ASSET-MANIFEST.md public/brand public/fonts public/models public/images/brand public/assets
+          if git diff --cached --quiet; then
+            echo "No asset changes to commit."
+            exit 0
+          fi
+          git commit -m "Import frontend-ready Mokai brand assets"
+          git push origin HEAD:main
