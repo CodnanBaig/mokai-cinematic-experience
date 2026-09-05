@@ -14,17 +14,6 @@
   min-width: 0;
 }
 
-.posterButton {
-  display: block;
-  width: 100%;
-  padding: 0;
-  border: 0;
-  color: inherit;
-  background: transparent;
-  text-align: left;
-  cursor: pointer;
-}
-
 .previewViewport {
   position: relative;
   display: block;
@@ -98,9 +87,34 @@
   letter-spacing: -.05em;
 }
 
+.watchLabel {
+  position: absolute;
+  z-index: 4;
+  left: 24px;
+  bottom: 22px;
+  color: var(--paper);
+  font-size: 9px;
+  letter-spacing: .2em;
+}
+
+.posterButton {
+  position: absolute;
+  z-index: 6;
+  top: 0;
+  left: 0;
+  width: 100%;
+  aspect-ratio: 9 / 14.8;
+  padding: 0;
+  border: 0;
+  border-radius: 44% 44% 8px 8px;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+}
+
 .playMark {
   position: absolute;
-  z-index: 5;
+  z-index: 7;
   top: 50%;
   left: 50%;
   width: 64px;
@@ -113,16 +127,6 @@
   border: 1px solid rgba(243, 223, 213, .86);
   transform: translate(-50%, -50%);
   transition: transform .3s ease, background .3s ease;
-}
-
-.watchLabel {
-  position: absolute;
-  z-index: 4;
-  left: 24px;
-  bottom: 22px;
-  color: var(--paper);
-  font-size: 9px;
-  letter-spacing: .2em;
 }
 
 .cardFooter {
@@ -143,17 +147,16 @@
 .posterButton:focus-visible {
   outline: 2px solid var(--matcha-dark);
   outline-offset: 6px;
-  border-radius: 44% 44% 8px 8px;
 }
 
 @media (hover: hover) {
-  .posterButton:hover .previewVeil {
+  .card:hover .previewVeil {
     background:
       linear-gradient(to top, rgba(20, 15, 16, .76) 0%, rgba(20, 15, 16, .08) 46%, rgba(107, 43, 115, .28) 100%),
       linear-gradient(135deg, rgba(201, 100, 207, .18), transparent 52%);
   }
 
-  .posterButton:hover .playMark {
+  .card:hover .playMark {
     transform: translate(-50%, -50%) scale(1.08) rotate(-4deg);
     background: var(--matcha);
   }
@@ -375,7 +378,8 @@
 
 @media (max-width: 680px) {
   .grid { gap: 18px 12px; }
-  .previewViewport { border-radius: 38% 38% 6px 6px; }
+  .previewViewport,
+  .posterButton { border-radius: 38% 38% 6px 6px; }
   .posterTopline { top: 15px; left: 14px; right: 14px; font-size: 7px; }
   .posterSerial { left: 14px; bottom: 44px; font-size: 42px; }
   .watchLabel { left: 15px; bottom: 16px; font-size: 7px; }
@@ -402,7 +406,8 @@
 
 @media (max-width: 420px) {
   .grid { grid-template-columns: 1fr; max-width: 340px; margin-inline: auto; gap: 28px; }
-  .previewViewport { aspect-ratio: 9 / 14.5; }
+  .previewViewport,
+  .posterButton { aspect-ratio: 9 / 14.5; }
   .posterSerial { font-size: 58px; }
 }
 
