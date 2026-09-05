@@ -1,98 +1,90 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import CinematicReelGallery, { type CinematicReel } from "@/components/CinematicReelGallery";
 import PageMotion from "@/components/PageMotion";
 import SiteFooter from "@/components/SiteFooter";
 import SiteNav from "@/components/SiteNav";
 import { defaultSocialImage, siteUrl } from "@/lib/seo";
 import styles from "./page.module.css";
 
-type Reel = {
-  code: string;
-  path: "p" | "reel";
-  label: string;
-  series: string;
-};
+export const revalidate = 3600;
 
-const reels: Reel[] = [
-  {
-    code: "DROltK6j4nS",
-    path: "reel",
-    label: "The Office with Team Mokai",
-    series: "THE OFFICE",
-  },
-  {
-    code: "DVnRZwXCGxt",
-    path: "reel",
-    label: "Episode 20: Jai Mummy Di",
-    series: "THE OFFICE · EP 20",
-  },
-  {
-    code: "DVxyrMKCJxt",
-    path: "p",
-    label: "How Mokai Started",
-    series: "HOW MOKAI STARTED",
-  },
-  {
-    code: "DVu_Q59CDs4",
-    path: "reel",
-    label: "How Mokai Started",
-    series: "HOW MOKAI STARTED",
-  },
-  {
-    code: "DcibxHUIXbS",
-    path: "p",
-    label: "Every Corner Has a Story",
-    series: "MOKAI STORIES",
-  },
+const fallbackReels: CinematicReel[] = [
+  { code: "DROltK6j4nS", label: "Mokai reel" },
+  { code: "DVnRZwXCGxt", label: "Mokai reel" },
+  { code: "DVxyrMKCJxt", label: "Mokai reel" },
+  { code: "DVu_Q59CDs4", label: "Mokai reel" },
+  { code: "DcibxHUIXbS", label: "Mokai reel" },
 ];
+
+function extractShortcodes(html: string) {
+  const codes: string[] = [];
+  const patterns = [
+    /href=["'][^"']*\/p\/([A-Za-z0-9_-]{6,20})\/?["']/g,
+    /href=["'][^"']*\/reel\/([A-Za-z0-9_-]{6,20})\/?["']/g,
+    /(?:shortcode|code)["'\s:=]+([A-Za-z0-9_-]{6,20})/g,
+  ];
+
+  for (const pattern of patterns) {
+    for (const match of html.matchAll(pattern)) {
+      const code = match[1];
+      if (code && !codes.includes(code)) codes.push(code);
+    }
+  }
+
+  return codes;
+}
+
+async function getLatestReels(): Promise<CinematicReel[]> {
+  try {
+    const response = await fetch("https://imginn.com/reels/mokaiindia/", {
+      next: { revalidate: 3600 },
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/128 Safari/537.36",
+        Accept: "text/html,application/xhtml+xml",
+      },
+    });
+
+    if (!response.ok) throw new Error(`Feed request failed: ${response.status}`);
+
+    const html = await response.text();
+    const codes = extractShortcodes(html).slice(0, 20);
+
+    if (codes.length >= 12) {
+      return codes.map((code) => ({ code, label: "Mokai reel" }));
+    }
+  } catch {
+    // Public feed mirrors can occasionally throttle requests. The known embeds remain as a safe fallback.
+  }
+
+  return fallbackReels;
+}
 
 export const metadata: Metadata = {
   title: "Mokai Cinematic Universe",
   description:
-    "Watch the Mokai Cinematic Universe on-site: episodic reels, recurring characters and stories from Mokai in Bandra.",
+    "Watch the latest Mokai reels on-site: episodic videos, recurring characters and stories from Mokai in Bandra.",
   alternates: {
     canonical: "/cinematic-universe",
   },
   openGraph: {
     title: "Mokai Cinematic Universe",
-    description: "Watch Mokai's reel series and recurring stories from Bandra.",
+    description: "Watch Mokai's latest reels and recurring stories from Bandra.",
     url: `${siteUrl}/cinematic-universe`,
     images: [defaultSocialImage],
   },
   twitter: {
     card: "summary_large_image",
     title: "Mokai Cinematic Universe",
-    description: "Watch the Mokai Cinematic Universe on-site.",
+    description: "Watch the latest Mokai reels on-site.",
     images: [defaultSocialImage],
   },
 };
 
-function ReelCard({ reel, index }: { reel: Reel; index: number }) {
-  const embed = `https://www.instagram.com/${reel.path}/${reel.code}/embed/`;
+export default async function CinematicUniversePage() {
+  const reels = await getLatestReels();
 
-  return (
-    <article className={styles.reelCard} data-reveal="clip">
-      <div className={styles.reelMeta}>
-        <span>{String(index + 1).padStart(2, "0")}</span>
-        <span>{reel.series}</span>
-      </div>
-      <div className={styles.reelViewport}>
-        <iframe
-          className={styles.reelEmbed}
-          src={embed}
-          title={`Mokai reel ${index + 1}: ${reel.label}`}
-          loading={index < 2 ? "eager" : "lazy"}
-          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-          allowFullScreen
-          referrerPolicy="strict-origin-when-cross-origin"
-          scrolling="no"
-        />
-      </div>
-    </article>
-  );
-}
-
-export default function CinematicUniversePage() {
   return (
     <PageMotion className={styles.page} id="top">
       <div className={styles.grain} aria-hidden="true" />
@@ -107,7 +99,7 @@ export default function CinematicUniversePage() {
               <em>CINEMATIC</em><br />
               UNIVERSE
             </h1>
-            <p className={styles.intro}>Watch the story unfold without leaving Mokai.</p>
+            <p className={styles.intro}>The latest reels. Watch them here.</p>
           </div>
 
           <div className={styles.heroArt} data-reveal="clip">
@@ -131,7 +123,7 @@ export default function CinematicUniversePage() {
               aria-hidden="true"
             />
             <div className={styles.heroStamp} aria-hidden="true">
-              <span>PLAY ALL</span>
+              <span>LATEST</span>
               <span>01 — {String(reels.length).padStart(2, "0")}</span>
             </div>
           </div>
@@ -140,7 +132,7 @@ export default function CinematicUniversePage() {
         <section className={styles.library} aria-labelledby="reel-library-title">
           <header className={styles.libraryHeader}>
             <div>
-              <p className={styles.eyebrow}>MOKAI / REEL ARCHIVE</p>
+              <p className={styles.eyebrow}>@MOKAIINDIA / LATEST REELS</p>
               <h2 id="reel-library-title">NOW<br /><em>playing.</em></h2>
             </div>
             <Image
@@ -153,11 +145,7 @@ export default function CinematicUniversePage() {
             />
           </header>
 
-          <div className={styles.reelGrid}>
-            {reels.map((reel, index) => (
-              <ReelCard key={reel.code} reel={reel} index={index} />
-            ))}
-          </div>
+          <CinematicReelGallery reels={reels} />
         </section>
       </main>
 
