@@ -1,0 +1,129 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: max(28px, env(safe-area-inset-top)) 28px max(28px, env(safe-area-inset-bottom));
+  background: var(--ink);
+  color: var(--paper);
+  overflow: hidden;
+  isolation: isolate;
+  transition: opacity .55s cubic-bezier(0.16, 1, 0.3, 1), visibility .55s linear;
+}
+
+.loader.isDone {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.atmosphere {
+  position: absolute;
+  inset: -8%;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(107, 43, 115, .28), transparent 52%),
+    url("/images/brand/backdrop-08.webp") center / cover no-repeat;
+  opacity: .14;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  text-align: center;
+  animation: loaderEnter .9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.seal {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 6px;
+  opacity: 0;
+  animation: sealIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) .12s both;
+}
+
+.seal img {
+  width: 100%;
+  height: auto;
+  filter: brightness(0) invert(1);
+}
+
+.stage :global(.brand) {
+  width: min(220px, 58vw);
+  height: 38px;
+}
+
+.stage :global(.brand img) {
+  left: -6%;
+}
+
+.place {
+  margin: 0;
+  color: rgba(230, 217, 198, .62);
+  font-size: 10px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+}
+
+.progress {
+  width: min(132px, 34vw);
+  height: 1px;
+  margin-top: 10px;
+  background: rgba(230, 217, 198, .18);
+  overflow: hidden;
+}
+
+.progress span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--parchment);
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform .08s linear;
+}
+
+@keyframes loaderEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes sealIn {
+  from {
+    opacity: 0;
+    transform: scale(.92);
+  }
+  to {
+    opacity: .94;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage,
+  .seal {
+    animation: none;
+    opacity: 1;
+  }
+  .loader {
+    transition-duration: .15s;
+  }
+  .progress span {
+    transition: none;
+  }
+}

@@ -5,6 +5,7 @@ import { ArrowDownRight, ArrowUpRight, MapPin, Phone, Sparkles } from "lucide-re
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import BrandMark from "./BrandMark";
+import Loader from "./Loader";
 import SiteFooter from "./SiteFooter";
 import SiteNav from "./SiteNav";
 import { useScrollMotion } from "@/hooks/useScrollMotion";
@@ -37,29 +38,6 @@ const rooms = [
     image: "/images/brand/interiors/frame-02.webp"
   }
 ] as const;
-
-function Loader({ done }: { done: () => void }) {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    const started = performance.now();
-    const tick = (time: number) => {
-      const progress = Math.min(100, Math.round(((time - started) / 1300) * 100));
-      setCount(progress);
-      if (progress < 100) requestAnimationFrame(tick);
-      else window.setTimeout(done, 180);
-    };
-    requestAnimationFrame(tick);
-  }, [done]);
-
-  return (
-    <div className="loader" aria-hidden="true">
-      <div className="loader__mark"><BrandMark light /></div>
-      <div className="loader__line"><span style={{ width: `${count}%` }} /></div>
-      <div className="loader__meta"><span>Bandra / Mumbai</span><span>{count.toString().padStart(3, "0")}</span></div>
-    </div>
-  );
-}
 
 function Marquee() {
   const words = ["COFFEE LOVE", "MATCHA RITUAL", "BANDRA ENERGY", "SLOWER LIVING"];
