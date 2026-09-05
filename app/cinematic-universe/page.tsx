@@ -7,84 +7,51 @@ import SiteNav from "@/components/SiteNav";
 import { defaultSocialImage, siteUrl } from "@/lib/seo";
 import styles from "./page.module.css";
 
-export const revalidate = 3600;
-
-const fallbackReels: CinematicReel[] = [
-  { code: "DROltK6j4nS", label: "Mokai reel" },
-  { code: "DVnRZwXCGxt", label: "Mokai reel" },
+const reels: CinematicReel[] = [
+  { code: "DcibxHUIXbS", label: "Mokai reel" },
+  { code: "Dbfa2vCCBGK", label: "Mokai reel" },
+  { code: "DaFZvXMKxN9", label: "Mokai reel" },
+  { code: "DWtESJCCGhS", label: "Mokai reel" },
+  { code: "DWijU9wCEYB", label: "Mokai reel" },
   { code: "DVxyrMKCJxt", label: "Mokai reel" },
   { code: "DVu_Q59CDs4", label: "Mokai reel" },
-  { code: "DcibxHUIXbS", label: "Mokai reel" },
+  { code: "DVnRZwXCGxt", label: "Mokai reel" },
+  { code: "DUkODQwCL9r", label: "Mokai reel" },
+  { code: "DSO9xuFj8hH", label: "Mokai reel" },
+  { code: "DRee2rHiDom", label: "Mokai reel" },
+  { code: "DROltK6j4nS", label: "Mokai reel" },
+  { code: "DQ4Lqi3iI9q", label: "Mokai reel" },
+  { code: "DMICpEJoqGk", label: "Mokai reel" },
+  { code: "DLSEUAcoBKa", label: "Mokai reel" },
+  { code: "DJeM7bBoTcd", label: "Mokai reel" },
+  { code: "DDFDMLVIDaT", label: "Mokai reel" },
+  { code: "C-nOGLFyr10", label: "Mokai reel" },
+  { code: "C9pIhSlSVLj", label: "Mokai reel" },
+  { code: "C5lRlngvPDI", label: "Mokai reel" },
 ];
-
-function extractShortcodes(html: string) {
-  const codes: string[] = [];
-  const patterns = [
-    /href=["'][^"']*\/p\/([A-Za-z0-9_-]{6,20})\/?["']/g,
-    /href=["'][^"']*\/reel\/([A-Za-z0-9_-]{6,20})\/?["']/g,
-    /(?:shortcode|code)["'\s:=]+([A-Za-z0-9_-]{6,20})/g,
-  ];
-
-  for (const pattern of patterns) {
-    for (const match of html.matchAll(pattern)) {
-      const code = match[1];
-      if (code && !codes.includes(code)) codes.push(code);
-    }
-  }
-
-  return codes;
-}
-
-async function getLatestReels(): Promise<CinematicReel[]> {
-  try {
-    const response = await fetch("https://imginn.com/reels/mokaiindia/", {
-      next: { revalidate: 3600 },
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/128 Safari/537.36",
-        Accept: "text/html,application/xhtml+xml",
-      },
-    });
-
-    if (!response.ok) throw new Error(`Feed request failed: ${response.status}`);
-
-    const html = await response.text();
-    const codes = extractShortcodes(html).slice(0, 20);
-
-    if (codes.length >= 12) {
-      return codes.map((code) => ({ code, label: "Mokai reel" }));
-    }
-  } catch {
-    // Public feed mirrors can occasionally throttle requests. The known embeds remain as a safe fallback.
-  }
-
-  return fallbackReels;
-}
 
 export const metadata: Metadata = {
   title: "Mokai Cinematic Universe",
   description:
-    "Watch the latest Mokai reels on-site: episodic videos, recurring characters and stories from Mokai in Bandra.",
+    "Watch the Mokai Cinematic Universe on-site: twenty embedded videos, recurring characters and stories from Mokai in Bandra.",
   alternates: {
     canonical: "/cinematic-universe",
   },
   openGraph: {
     title: "Mokai Cinematic Universe",
-    description: "Watch Mokai's latest reels and recurring stories from Bandra.",
+    description: "Watch Mokai's reel series and recurring stories from Bandra without leaving the site.",
     url: `${siteUrl}/cinematic-universe`,
     images: [defaultSocialImage],
   },
   twitter: {
     card: "summary_large_image",
     title: "Mokai Cinematic Universe",
-    description: "Watch the latest Mokai reels on-site.",
+    description: "Watch twenty Mokai reels on-site.",
     images: [defaultSocialImage],
   },
 };
 
-export default async function CinematicUniversePage() {
-  const reels = await getLatestReels();
-
+export default function CinematicUniversePage() {
   return (
     <PageMotion className={styles.page} id="top">
       <div className={styles.grain} aria-hidden="true" />
@@ -99,7 +66,7 @@ export default async function CinematicUniversePage() {
               <em>CINEMATIC</em><br />
               UNIVERSE
             </h1>
-            <p className={styles.intro}>The latest reels. Watch them here.</p>
+            <p className={styles.intro}>Twenty reels. One universe. Watch them here.</p>
           </div>
 
           <div className={styles.heroArt} data-reveal="clip">
@@ -123,8 +90,8 @@ export default async function CinematicUniversePage() {
               aria-hidden="true"
             />
             <div className={styles.heroStamp} aria-hidden="true">
-              <span>LATEST</span>
-              <span>01 — {String(reels.length).padStart(2, "0")}</span>
+              <span>WATCH ALL</span>
+              <span>01 — 20</span>
             </div>
           </div>
         </section>
@@ -132,7 +99,7 @@ export default async function CinematicUniversePage() {
         <section className={styles.library} aria-labelledby="reel-library-title">
           <header className={styles.libraryHeader}>
             <div>
-              <p className={styles.eyebrow}>@MOKAIINDIA / LATEST REELS</p>
+              <p className={styles.eyebrow}>@MOKAIINDIA / REEL ARCHIVE</p>
               <h2 id="reel-library-title">NOW<br /><em>playing.</em></h2>
             </div>
             <Image
