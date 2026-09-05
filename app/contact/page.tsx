@@ -4,12 +4,36 @@ import { Clock3, MapPin, Phone } from "lucide-react";
 import PageMotion from "@/components/PageMotion";
 import SiteFooter from "@/components/SiteFooter";
 import SiteNav from "@/components/SiteNav";
+import { defaultSocialImage } from "@/lib/seo";
 import FeedbackForm from "./FeedbackForm";
 import styles from "./page.module.css";
 
+const contactDescription =
+  "Contact Mokai in Pali Hill, Bandra West for feedback, enquiries and collaborations. Find our Mumbai address, phone numbers and opening hours.";
+
 export const metadata: Metadata = {
-  title: "Contact us | Mokai",
-  description: "Contact Mokai in Pali Hill, Bandra West, or send feedback about your experience.",
+  title: "Contact Mokai in Bandra",
+  description: contactDescription,
+  alternates: {
+    canonical: "/contact",
+  },
+  openGraph: {
+    title: "Contact Mokai in Bandra | Mokai",
+    description: contactDescription,
+    url: "/contact",
+    images: [
+      {
+        url: defaultSocialImage,
+        alt: "Mokai café in Bandra, Mumbai",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact Mokai in Bandra | Mokai",
+    description: contactDescription,
+    images: [defaultSocialImage],
+  },
 };
 
 type ContactPageProps = {
