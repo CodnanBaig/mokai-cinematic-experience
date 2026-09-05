@@ -24,39 +24,40 @@ function PosterCard({
 
   return (
     <article className={styles.card} data-media-kind={entry.kind}>
+      <div className={styles.previewViewport} aria-hidden="true">
+        <iframe
+          className={styles.previewEmbed}
+          src={embedUrl(entry)}
+          title=""
+          tabIndex={-1}
+          loading="lazy"
+          allow="encrypted-media; picture-in-picture"
+          referrerPolicy="strict-origin-when-cross-origin"
+        />
+        <span className={styles.previewVeil} />
+        <span className={styles.posterTopline}>
+          <span>MOKAI ORIGINAL</span>
+          <span>{entry.kind === "reel" ? "REEL" : "STORY"}</span>
+        </span>
+        <span className={styles.posterSerial}>{serial}</span>
+        <span className={styles.watchLabel}>WATCH STORY</span>
+      </div>
+
       <button
         type="button"
         className={styles.posterButton}
         onClick={onOpen}
         aria-label={`Watch Mokai story ${number}`}
       >
-        <span className={styles.previewViewport} aria-hidden="true">
-          <iframe
-            className={styles.previewEmbed}
-            src={embedUrl(entry)}
-            title=""
-            tabIndex={-1}
-            loading="lazy"
-            allow="encrypted-media; picture-in-picture"
-            referrerPolicy="strict-origin-when-cross-origin"
-          />
-          <span className={styles.previewVeil} />
-          <span className={styles.posterTopline}>
-            <span>MOKAI ORIGINAL</span>
-            <span>{entry.kind === "reel" ? "REEL" : "STORY"}</span>
-          </span>
-          <span className={styles.posterSerial}>{serial}</span>
-          <span className={styles.playMark}>
-            <Play size={22} fill="currentColor" aria-hidden="true" />
-          </span>
-          <span className={styles.watchLabel}>WATCH STORY</span>
-        </span>
-
-        <span className={styles.cardFooter}>
-          <span>MCU / {serial}</span>
-          <span>{entry.kind === "reel" ? "MOVING IMAGE" : "FRAME"}</span>
+        <span className={styles.playMark} aria-hidden="true">
+          <Play size={22} fill="currentColor" />
         </span>
       </button>
+
+      <div className={styles.cardFooter} aria-hidden="true">
+        <span>MCU / {serial}</span>
+        <span>{entry.kind === "reel" ? "MOVING IMAGE" : "FRAME"}</span>
+      </div>
     </article>
   );
 }
