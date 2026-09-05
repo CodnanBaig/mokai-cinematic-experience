@@ -5,11 +5,35 @@ import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import PageMotion from "@/components/PageMotion";
 import SiteFooter from "@/components/SiteFooter";
 import SiteNav from "@/components/SiteNav";
+import { defaultSocialImage } from "@/lib/seo";
 import styles from "./page.module.css";
 
+const careersDescription =
+  "Explore careers and opportunities to work with Mokai in Bandra, Mumbai across coffee, bar, kitchen, guest experience, creative and community roles.";
+
 export const metadata: Metadata = {
-  title: "Join our team | Mokai",
-  description: "Bring your craft, curiosity and care to Mokai in Bandra.",
+  title: "Careers at Mokai Bandra",
+  description: careersDescription,
+  alternates: {
+    canonical: "/join-our-team",
+  },
+  openGraph: {
+    title: "Careers at Mokai Bandra | Join Our Team",
+    description: careersDescription,
+    url: "/join-our-team",
+    images: [
+      {
+        url: defaultSocialImage,
+        alt: "Mokai café in Bandra, Mumbai",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Careers at Mokai Bandra | Join Our Team",
+    description: careersDescription,
+    images: [defaultSocialImage],
+  },
 };
 
 const teams = [
