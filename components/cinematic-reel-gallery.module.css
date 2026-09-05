@@ -1,93 +1,47 @@
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(28px, 4vw, 64px);
-  align-items: start;
-}
-
-.card {
-  position: relative;
-  padding: 12px;
-  background: var(--ink);
-  color: var(--paper);
-  box-shadow: 0 22px 60px rgba(62, 43, 46, .13);
-}
-
-.card:nth-child(even) { margin-top: clamp(34px, 6vw, 92px); }
-
-.meta {
-  display: flex;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 1px 2px 11px;
-  font-size: 8px;
-  line-height: 1.2;
-  letter-spacing: .19em;
-  text-transform: uppercase;
-  opacity: .82;
-}
-
-.viewport {
-  position: relative;
-  aspect-ratio: 9 / 16;
-  overflow: hidden;
-  background: #fff;
-}
-
-.embed {
-  position: absolute;
-  left: 0;
-  top: -1px;
-  width: 100%;
-  height: calc(100% + 250px);
-  border: 0;
-  background: #fff;
-}
-
-.playGate {
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  border: 0;
-  background: linear-gradient(to top, rgba(51,50,50,.52), rgba(51,50,50,.02) 52%);
-  color: var(--paper);
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 11px;
-  font: inherit;
-  font-size: 9px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  transition: background .2s ease;
-}
-
-.playGate:hover { background: linear-gradient(to top, rgba(51,50,50,.6), rgba(51,50,50,.08) 55%); }
-
-.playIcon {
-  width: 52px;
-  height: 52px;
-  border: 1px solid rgba(243,223,213,.78);
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  backdrop-filter: blur(8px);
-  background: rgba(51,50,50,.18);
-}
-
-.active {
-  outline: 1px solid rgba(201, 100, 207, .58);
-  outline-offset: 5px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .playGate { transition: none; }
-}
-
+.gallery { max-width: 1400px; margin-inline: auto; }
+.toolbar { display: flex; justify-content: space-between; align-items: center; gap: 24px; border-block: 1px solid rgba(230,217,198,.25); padding-block: 20px; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.filters button { display: inline-flex; align-items: center; gap: 14px; padding: 12px 18px; min-height: 44px; color: var(--paper); background: transparent; border: 1px solid transparent; border-radius: 999px; cursor: pointer; font-size: 14px; transition: color .2s, background .2s; }
+.filters button[aria-pressed="true"] { color: var(--ink); background: var(--paper); }
+.filters button span { font-size: 11px; }
+.filters button:hover { border-color: var(--paper); }
+.profile { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; min-height: 44px; }
+.note { max-width: 54ch; margin: 24px 0 36px; font-size: 15px; line-height: 1.5; }
+.grid { columns: 3; column-gap: 24px; }
+.card { break-inside: avoid; margin: 0 0 24px; padding: 10px; background: var(--parchment); color: var(--ink); border-radius: 6px; }
+.meta { display: flex; justify-content: space-between; align-items: center; padding: 0 4px 8px; font-size: 12px; }
+.kind { margin-left: 10px; color: var(--matcha-dark); }
+.meta a { display: grid; place-items: center; min-width: 36px; min-height: 36px; }
+.embedStage { position: relative; overflow: hidden; border-radius: 3px; background: var(--paper); }
+.embed { position: relative; z-index: 1; display: block; width: 100%; border: 0; border-radius: 3px; background: white; opacity: 0; transition: opacity .35s ease; }
+.embedReady { opacity: 1; }
+.embedSkeleton { position: absolute; z-index: 2; inset: 0; overflow: hidden; background: linear-gradient(110deg, rgba(243,223,213,.65) 8%, rgba(255,255,255,.68) 18%, rgba(243,223,213,.65) 33%); background-size: 220% 100%; animation: skeletonShimmer 1.3s linear infinite; pointer-events: none; transition: opacity .3s ease; }
+.embedSkeleton span { position: absolute; inset: 12% 10%; display: block; border: 1px solid rgba(107,43,115,.12); border-radius: 50% 50% 4px 4px; }
+.embedSkeleton.isHidden { opacity: 0; }
+.skeletonCard { background: rgba(243,223,213,.72); }
+.skeletonMeta { display: flex; justify-content: space-between; height: 32px; padding: 5px 4px 8px; }
+.skeletonMeta span { display: block; height: 10px; width: 28%; background: rgba(107,43,115,.15); border-radius: 999px; animation: skeletonShimmer 1.3s linear infinite; background-image: linear-gradient(110deg, rgba(107,43,115,.12) 8%, rgba(255,255,255,.5) 18%, rgba(107,43,115,.12) 33%); background-size: 220% 100%; }
+.skeletonMeta span:last-child { width: 12%; }
+.skeletonMedia { position: relative; overflow: hidden; aspect-ratio: 9 / 15.8; background: linear-gradient(135deg, rgba(107,43,115,.18), rgba(243,223,213,.36)); }
+.skeletonCard[data-media-kind="post"] .skeletonMedia { aspect-ratio: 4 / 5; }
+.skeletonMedia span { position: absolute; inset: 20% 12%; border: 1px solid rgba(107,43,115,.16); border-radius: 50%; }
+.sentinel { height: 2px; width: 100%; }
+.more { display: flex; flex-direction: column; align-items: center; gap: 22px; padding-top: 40px; }
+.more p { margin: 0; font-size: 12px; }
+.more button { display: inline-flex; align-items: center; justify-content: center; gap: 22px; min-height: 54px; padding: 15px 28px; border: 1px solid var(--paper); border-radius: 999px; color: var(--paper); background: transparent; cursor: pointer; }
+.more button:hover { color: var(--ink); background: var(--paper); }
+.more button:disabled { cursor: progress; opacity: .65; }
+.more a { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font-size: 13px; }
+.gallery :is(a,button):focus-visible { outline: 2px solid var(--matcha); outline-offset: 4px; }
+@media (max-width: 1150px) { .grid { columns: 2; } }
 @media (max-width: 760px) {
-  .grid { grid-template-columns: 1fr; gap: 34px; }
-  .card:nth-child(even) { margin-top: 0; }
-  .card { width: min(100%, 560px); justify-self: center; }
+  .grid { columns: 1; max-width: 480px; margin-inline: auto; }
+  .toolbar { align-items: flex-start; flex-direction: column; gap: 12px; }
+  .filters button { padding: 10px 14px; gap: 10px; }
+  .card { padding: 6px; }
+}
+@media (prefers-reduced-motion: reduce) { .filters button { transition: none; } }
+@keyframes skeletonShimmer { from { background-position: 200% 0; } to { background-position: -20% 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .embed, .embedSkeleton { transition: none; animation: none; }
 }

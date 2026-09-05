@@ -8,32 +8,32 @@ import { defaultSocialImage, siteUrl } from "@/lib/seo";
 import styles from "./page.module.css";
 
 const reels: CinematicReel[] = [
-  { code: "DcibxHUIXbS", label: "Mokai reel" },
-  { code: "Dbfa2vCCBGK", label: "Mokai reel" },
-  { code: "DaFZvXMKxN9", label: "Mokai reel" },
-  { code: "DWtESJCCGhS", label: "Mokai reel" },
-  { code: "DWijU9wCEYB", label: "Mokai reel" },
-  { code: "DVxyrMKCJxt", label: "Mokai reel" },
-  { code: "DVu_Q59CDs4", label: "Mokai reel" },
-  { code: "DVnRZwXCGxt", label: "Mokai reel" },
-  { code: "DUkODQwCL9r", label: "Mokai reel" },
-  { code: "DSO9xuFj8hH", label: "Mokai reel" },
-  { code: "DRee2rHiDom", label: "Mokai reel" },
-  { code: "DROltK6j4nS", label: "Mokai reel" },
-  { code: "DQ4Lqi3iI9q", label: "Mokai reel" },
-  { code: "DMICpEJoqGk", label: "Mokai reel" },
-  { code: "DLSEUAcoBKa", label: "Mokai reel" },
-  { code: "DJeM7bBoTcd", label: "Mokai reel" },
-  { code: "DDFDMLVIDaT", label: "Mokai reel" },
-  { code: "C-nOGLFyr10", label: "Mokai reel" },
-  { code: "C9pIhSlSVLj", label: "Mokai reel" },
-  { code: "C5lRlngvPDI", label: "Mokai reel" },
+  { code: "DcibxHUIXbS", kind: "reel" },
+  { code: "Dbfa2vCCBGK", kind: "reel" },
+  { code: "DaFZvXMKxN9", kind: "reel" },
+  { code: "DWtESJCCGhS", kind: "post" },
+  { code: "DWijU9wCEYB", kind: "post" },
+  { code: "DVxyrMKCJxt", kind: "post" },
+  { code: "DVu_Q59CDs4", kind: "reel" },
+  { code: "DVnRZwXCGxt", kind: "reel" },
+  { code: "DUkODQwCL9r", kind: "post" },
+  { code: "DSO9xuFj8hH", kind: "reel" },
+  { code: "DRee2rHiDom", kind: "post" },
+  { code: "DROltK6j4nS", kind: "reel" },
+  { code: "DQ4Lqi3iI9q", kind: "reel" },
+  { code: "DMICpEJoqGk", kind: "reel" },
+  { code: "DLSEUAcoBKa", kind: "post" },
+  { code: "DJeM7bBoTcd", kind: "post" },
+  { code: "DDFDMLVIDaT", kind: "post" },
+  { code: "C-nOGLFyr10", kind: "post" },
+  { code: "C9pIhSlSVLj", kind: "reel" },
+  { code: "C5lRlngvPDI", kind: "reel" },
 ];
 
 export const metadata: Metadata = {
   title: "Mokai Cinematic Universe",
   description:
-    "Watch the Mokai Cinematic Universe on-site: twenty embedded videos, recurring characters and stories from Mokai in Bandra.",
+    "Watch the Mokai Cinematic Universe on-site: reels and photo posts, recurring characters and stories from Mokai in Bandra.",
   alternates: {
     canonical: "/cinematic-universe",
   },
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Mokai Cinematic Universe",
-    description: "Watch twenty Mokai reels on-site.",
+    description: "Explore Mokai's reels and photo stories.",
     images: [defaultSocialImage],
   },
 };
@@ -66,14 +66,15 @@ export default function CinematicUniversePage() {
               <em>CINEMATIC</em><br />
               UNIVERSE
             </h1>
-            <p className={styles.intro}>Twenty reels. One universe. Watch them here.</p>
+            <p className={styles.intro}>Familiar faces. Unscripted moments. A little Bandra drama.</p>
+            <a className={styles.heroLink} href="#stories">Explore the stories <span aria-hidden="true">↘</span></a>
           </div>
 
           <div className={styles.heroArt} data-reveal="clip">
             <div className={styles.heroImage} data-parallax-wrap>
               <Image
-                src="/images/brand/interiors/frame-03.webp"
-                alt="Inside Mokai in Bandra"
+                src="/images/mokai-window.webp"
+                alt="Sunlit windows and patterned cushions from the Mokai archive"
                 fill
                 priority
                 sizes="(max-width: 900px) 90vw, 42vw"
@@ -90,17 +91,17 @@ export default function CinematicUniversePage() {
               aria-hidden="true"
             />
             <div className={styles.heroStamp} aria-hidden="true">
-              <span>WATCH ALL</span>
-              <span>01 — 20</span>
+              <span>THE MOKAI EDIT</span>
+              <span>20 STORIES</span>
             </div>
           </div>
         </section>
 
-        <section className={styles.library} aria-labelledby="reel-library-title">
+        <section id="stories" className={styles.library} aria-labelledby="reel-library-title">
           <header className={styles.libraryHeader}>
             <div>
-              <p className={styles.eyebrow}>@MOKAIINDIA / REEL ARCHIVE</p>
-              <h2 id="reel-library-title">NOW<br /><em>playing.</em></h2>
+              <p className={styles.eyebrow}>THE SOCIAL SIDE OF MOKAI</p>
+              <h2 id="reel-library-title">Off the clock.<br /><em>On your feed.</em></h2>
             </div>
             <Image
               src="/brand/mokai-with-hanko-filled.svg"
@@ -116,9 +117,7 @@ export default function CinematicUniversePage() {
         </section>
       </main>
 
-      <div data-reveal>
-        <SiteFooter />
-      </div>
+      <SiteFooter />
     </PageMotion>
   );
 }
