@@ -7,8 +7,7 @@ import styles from "./cinematic-reel-gallery.module.css";
 export type CinematicReel = { code: string; kind: "reel" | "post"; label?: string };
 
 function embedUrl(entry: CinematicReel) {
-  const route = entry.kind === "reel" ? "reel" : "p";
-  return `https://www.instagram.com/${route}/${entry.code}/embed/`;
+  return `https://www.instagram.com/p/${entry.code}/embed/`;
 }
 
 function PosterCard({
