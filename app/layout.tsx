@@ -22,6 +22,11 @@ export const metadata: Metadata = {
       "en-IN": "/",
     },
   },
+  icons: {
+    icon: "/brand/mokai-hanko-filled.svg",
+    shortcut: "/brand/mokai-hanko-filled.svg",
+    apple: "/brand/raster/mokai-hanko-filled.png",
+  },
   robots: {
     index: true,
     follow: true,
