@@ -9,16 +9,16 @@
   justify-content: space-between;
   gap: 56px;
   color: var(--paper);
-  background: radial-gradient(circle at 86% 100%, rgba(201,100,207,.18), transparent 34%), linear-gradient(115deg, var(--ink) 0%, var(--ink) 62%, #443548 100%);
+  background: var(--ink);
 }
 
 .footer::before {
   content: "";
   position: absolute;
   z-index: -1;
-  inset: -12% -12% -18% 46%;
-  background: linear-gradient(90deg, rgba(51,50,50,.94), rgba(51,50,50,.14)), url('/images/brand/backdrop-05.webp') center / cover no-repeat;
-  opacity: .18;
+  inset: 0;
+  background: url('/images/brand/backdrop-05.webp') center / cover no-repeat;
+  opacity: .04;
   mix-blend-mode: screen;
 }
 
@@ -30,7 +30,7 @@
 }
 
 .lockup { display: flex; align-items: center; gap: 24px; min-width: 0; }
-.lockup :global(.brand) { width: min(600px, 38vw); height: 90px; }
+.lockup :global(.brand) { width: min(600px, 38vw); height: auto; aspect-ratio: 300 / 54; }
 .lockup :global(.brand img) { left: -14%; }
 
 .hankoCrop {
@@ -67,12 +67,12 @@
   .footerTop, .footerBottom { display: flex; flex-direction: column; align-items: flex-start; }
   .footerTop > p, .footerBottom small { justify-self: auto; text-align: left; }
   .lockup { width: 100%; }
-  .lockup :global(.brand) { flex: 1 1 auto; width: auto; height: 58px; }
+  .lockup :global(.brand) { flex: 1 1 auto; width: auto; height: auto; }
 }
 
 @media (max-width: 560px) {
   .footer { min-height: 340px; }
   .hankoCrop { flex-basis: 50px; width: 50px; }
   .lockup { gap: 14px; }
-  .lockup :global(.brand) { height: 50px; }
+  .lockup :global(.brand) { height: auto; }
 }

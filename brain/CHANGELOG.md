@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-05 — Layered homepage and scroll choreography
+- Added layered hero/story photography using the existing brand assets, fonts and palette; identified Chapel Road images as archive material.
+- Built interactive Whisk / Watch / Wait / Sip controls, a scroll-linked orbit, and a room gallery with horizontal image parallax and progress.
+- Added mobile/native and reduced-motion gallery fallbacks, bounded parallax crops, media-query cleanup, and refresh after fonts/images load.
+- Improved navigation contrast and closed-mobile-menu keyboard visibility; added a pause control for the moving text.
+
 ## v2026.09.04-2224-commit-gate
 - Shipped shared SiteNav/SiteFooter, scroll motion, asset variety, and nav fixes after build + lint; lint fixes for SiteNav path reset and useScrollMotion extras ref.
 

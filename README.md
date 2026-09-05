@@ -7,7 +7,9 @@ An immersive, editorial website concept for Mokai, Bandra. The experience is bui
 - Full-screen branded loader
 - Lenis smooth scrolling
 - GSAP reveal, parallax and pinned horizontal storytelling
-- React Three Fiber matcha sculpture
+- Layered archive photography and independently drifting brand artwork
+- Scroll-linked matcha orbit with interactive Whisk / Watch / Wait / Sip steps
+- Pinned desktop room gallery with progress and a native mobile/reduced-motion scroller
 - Interactive menu preview
 - Responsive mobile layout
 - Reduced-motion accessibility fallback
@@ -16,8 +18,8 @@ An immersive, editorial website concept for Mokai, Bandra. The experience is bui
 ## Run locally
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 Open `http://localhost:3000`.
@@ -25,13 +27,13 @@ Open `http://localhost:3000`.
 ## Production
 
 ```bash
-npm run build
-npm run start
+pnpm build
+pnpm start
 ```
 
 ## Stack
 
-Next.js App Router, TypeScript, GSAP, Lenis, Three.js, React Three Fiber, Drei and Lucide React.
+Next.js App Router, TypeScript, GSAP ScrollTrigger, Lenis and Lucide React.
 
 ## Art direction
 
@@ -39,6 +41,8 @@ The implementation uses the supplied Mokai visual-language system: Kobe for disp
 
 ## Public research references
 
+- [Time Out: Mokai, April 2026](https://www.timeout.com/mumbai/restaurants/mokai) informed the Pali Hill story: coffee downstairs, matcha upstairs, Japanese restraint and playful details.
+- [Free Press Journal: Mokai 2.0, April 2026](https://www.freepressjournal.in/lifestyle/experience-a-slice-of-japan-in-mumbai-step-inside-mokai-bandras-aesthetic-viral-matcha-cafe-with-a-floating-bar) informed the hands-on matcha sequence. Archive photographs are labelled separately from the current location.
 - Mokai Instagram: `https://www.instagram.com/mokaiindia/`
 - Architectural Digest India feature: `https://www.architecturaldigest.in/story/this-charming-new-coffee-house-in-bandra-will-whisk-you-off-to-japan-mokai-studio-6158-minimalism-asia-chapel-road-cafe-karreena-bulchandani/`
 - Mokai 2.0 interview: `https://wp-admin.firstlook.fashion/exclusive-mokai-2-0-brings-a-slower-softer-rhythm-to-mumbai/`
