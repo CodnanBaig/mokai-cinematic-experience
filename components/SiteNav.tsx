@@ -9,6 +9,7 @@ import BrandMark from "./BrandMark";
 const links = [
   { href: "/#story", label: "Story", hash: "#story" },
   { href: "/#spaces", label: "Spaces", hash: "#spaces" },
+  { href: "/cinematic-universe", label: "Cinematic Universe", match: "/cinematic-universe" },
   { href: "/join-our-team", label: "Join our team", match: "/join-our-team" },
   { href: "/contact", label: "Contact", match: "/contact" },
 ] as const;
