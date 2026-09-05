@@ -17,6 +17,7 @@ export default function SiteFooter() {
       </div>
       <div className={styles.footerBottom}>
         <div className={styles.footerLinks}>
+          <Link href="/cinematic-universe">Cinematic Universe</Link>
           <Link href="/join-our-team">Join our team</Link>
           <Link href="/contact">Contact</Link>
           <a href="https://www.instagram.com/mokaiindia/" target="_blank" rel="noreferrer">Instagram</a>
