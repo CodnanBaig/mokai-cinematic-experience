@@ -13,13 +13,36 @@ export async function GET() {
       },
     });
     const text = await response.text();
-    const matches = Array.from(text.matchAll(/(?:\/p\/|\/reel\/)([A-Za-z0-9_-]{6,20})/g)).map((m) => m[1]);
+    const patterns = [
+      /"shortcode"\s*:\s*"([A-Za-z0-9_-]{6,20})"/g,
+      /\\"shortcode\\"\s*:\s*\\"([A-Za-z0-9_-]{6,20})\\"/g,
+      /"code"\s*:\s*"([A-Za-z0-9_-]{6,20})"/g,
+      /\\"code\\"\s*:\s*\\"([A-Za-z0-9_-]{6,20})\\"/g,
+      /(?:\/p\/|\/reel\/)([A-Za-z0-9_-]{6,20})/g,
+    ];
+    const codes: string[] = [];
+    for (const pattern of patterns) {
+      for (const match of text.matchAll(pattern)) {
+        if (match[1] && !codes.includes(match[1])) codes.push(match[1]);
+      }
+    }
+    const keywordSnippets = ["shortcode", "xdt_api__v1__feed", "mokaiindia"].flatMap((keyword) => {
+      const snippets: string[] = [];
+      let from = 0;
+      while (snippets.length < 8) {
+        const index = text.indexOf(keyword, from);
+        if (index < 0) break;
+        snippets.push(text.slice(Math.max(0, index - 180), index + 380));
+        from = index + keyword.length;
+      }
+      return snippets;
+    });
     return NextResponse.json({
       status: response.status,
       ok: response.ok,
       length: text.length,
-      codes: Array.from(new Set(matches)).slice(0, 50),
-      sample: text.slice(0, 5000),
+      codes: codes.slice(0, 80),
+      keywordSnippets,
     });
   } catch (error) {
     return NextResponse.json({ error: error instanceof Error ? error.message : String(error) }, { status: 500 });
