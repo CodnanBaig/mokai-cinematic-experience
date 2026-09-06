@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowLeft, ArrowRight, Play, X } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { ArrowLeft, ArrowRight, Play } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./cinematic-reel-gallery.module.css";
 
 export type CinematicReel = {
@@ -19,242 +19,218 @@ function serialise(value: number) {
   return String(value).padStart(2, "0");
 }
 
-function PosterCard({
-  entry,
-  number,
-  featured,
-  onOpen,
-}: {
-  entry: CinematicReel;
-  number: number;
-  featured: boolean;
-  onOpen: () => void;
-}) {
-  const serial = serialise(number);
-
-  return (
-    <article
-      className={`${styles.card} ${featured ? styles.featuredCard : ""}`}
-      data-media-kind={entry.kind}
-      data-reveal
-    >
-      <button
-        type="button"
-        className={styles.posterButton}
-        onClick={onOpen}
-        aria-label={`Watch Mokai story ${number}`}
-      >
-        <span className={styles.posterFrame} aria-hidden="true">
-          <span className={styles.previewViewport}>
-            <iframe
-              className={styles.previewEmbed}
-              src={embedUrl(entry)}
-              title=""
-              tabIndex={-1}
-              loading="lazy"
-              allow="encrypted-media; picture-in-picture"
-              referrerPolicy="strict-origin-when-cross-origin"
-            />
-            <span className={styles.previewVeil} />
-            <span className={styles.previewGrain} />
-          </span>
-
-          <span className={styles.posterChrome}>
-            <span className={styles.posterTopline}>
-              <span>MOKAI PICTURES</span>
-              <span>{entry.kind === "reel" ? "MOTION" : "FRAME"}</span>
-            </span>
-
-            <span className={styles.posterSpine}>BANDRA · MUMBAI · 2026</span>
-            <span className={styles.posterKicker}>A MOKAI STORY</span>
-            <span className={styles.posterSerial}>{serial}</span>
-
-            <span className={styles.posterAction}>
-              <span className={styles.playMark}>
-                <Play size={18} fill="currentColor" />
-              </span>
-              <span>ENTER SCREENING</span>
-            </span>
-          </span>
-        </span>
-      </button>
-
-      <div className={styles.cardFooter} aria-hidden="true">
-        <span>MCU / {serial}</span>
-        <span>{featured ? "FEATURED SCREENING" : "ARCHIVE STORY"}</span>
-      </div>
-    </article>
-  );
+function posterImage(index: number) {
+  const number = (index % 10) + 1;
+  return `/images/brand/backdrop-${String(number).padStart(2, "0")}.webp`;
 }
 
 export default function CinematicReelGallery({ reels }: { reels: CinematicReel[] }) {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const activeEntry = activeIndex === null ? null : reels[activeIndex];
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [entered, setEntered] = useState(false);
+  const screeningRef = useRef<HTMLElement | null>(null);
+  const activeEntry = reels[activeIndex];
+
+  const focusScreening = useCallback(() => {
+    requestAnimationFrame(() => {
+      screeningRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }, []);
+
+  const selectStory = useCallback(
+    (index: number) => {
+      setActiveIndex(index);
+      setEntered(true);
+      focusScreening();
+    },
+    [focusScreening],
+  );
 
   const move = useCallback(
     (delta: number) => {
-      setActiveIndex((current) => {
-        if (current === null) return 0;
-        return (current + delta + reels.length) % reels.length;
-      });
+      setActiveIndex((current) => (current + delta + reels.length) % reels.length);
+      setEntered(true);
     },
     [reels.length],
   );
 
   useEffect(() => {
-    if (activeIndex === null) return;
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setActiveIndex(null);
+      if (!entered) return;
       if (event.key === "ArrowLeft") move(-1);
       if (event.key === "ArrowRight") move(1);
     };
 
     window.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", onKeyDown);
-    };
-  }, [activeIndex, move]);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [entered, move]);
 
   return (
     <div className={styles.gallery}>
-      <div className={styles.grid}>
-        {reels.map((entry, index) => (
-          <PosterCard
-            key={entry.code}
-            entry={entry}
-            number={index + 1}
-            featured={index % 7 === 0}
-            onOpen={() => setActiveIndex(index)}
-          />
-        ))}
-      </div>
+      <section className={styles.screeningRoom} ref={screeningRef} aria-label="Mokai screening room">
+        <header className={styles.screeningHeader}>
+          <div className={styles.screeningIdentity}>
+            <Image
+              src="/brand/mokai-horizontal.svg"
+              alt="Mokai"
+              width={126}
+              height={36}
+              className={styles.screeningLogo}
+            />
+            <span>CINEMATIC UNIVERSE</span>
+          </div>
 
-      {activeEntry && activeIndex !== null ? (
-        <div
-          className={styles.playerBackdrop}
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) setActiveIndex(null);
-          }}
-        >
-          <section
-            className={styles.screeningRoom}
-            role="dialog"
-            aria-modal="true"
-            aria-label={`Mokai story ${activeIndex + 1}`}
-          >
-            <header className={styles.screeningHeader}>
-              <Image
-                className={styles.screeningLogo}
-                src="/brand/mokai-horizontal.svg"
-                alt="Mokai"
-                width={122}
-                height={34}
-                priority
-              />
-              <span className={styles.screeningStatus}>
-                PRIVATE SCREENING · {serialise(activeIndex + 1)} / {serialise(reels.length)}
-              </span>
-              <button
-                type="button"
-                className={styles.closeButton}
-                onClick={() => setActiveIndex(null)}
-                aria-label="Close player"
-                autoFocus
-              >
-                <X size={18} aria-hidden="true" />
-              </button>
-            </header>
+          <div className={styles.screeningCounter} aria-live="polite">
+            <span>NOW SCREENING</span>
+            <strong>{serialise(activeIndex + 1)}</strong>
+            <span>/ {serialise(reels.length)}</span>
+          </div>
+        </header>
 
-            <div className={styles.screeningStage}>
-              <button
-                type="button"
-                className={`${styles.stageNav} ${styles.stageNavPrevious}`}
-                onClick={() => move(-1)}
-                aria-label="Previous story"
-              >
-                <ArrowLeft size={18} aria-hidden="true" />
-                <span>PREV</span>
-              </button>
+        <div className={styles.screeningBody}>
+          <aside className={styles.screeningNotes} aria-hidden="true">
+            <span>MOKAI PICTURES</span>
+            <strong>MCU</strong>
+            <span>BANDRA · MUMBAI</span>
+          </aside>
 
-              <div className={styles.playerComposition}>
-                <span className={styles.playerGhostNumber} aria-hidden="true">
-                  {serialise(activeIndex + 1)}
-                </span>
+          <div className={styles.playerWrap}>
+            <span className={styles.ghostNumber} aria-hidden="true">
+              {serialise(activeIndex + 1)}
+            </span>
 
-                <div className={styles.playerFrame}>
-                  <span className={styles.frameNotch} aria-hidden="true" />
-                  <div className={styles.playerViewport} data-media-kind={activeEntry.kind}>
-                    <iframe
-                      key={activeEntry.code}
-                      className={styles.playerEmbed}
-                      src={embedUrl(activeEntry)}
-                      title={`Mokai story ${activeIndex + 1}`}
-                      allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-                      allowFullScreen
-                      referrerPolicy="strict-origin-when-cross-origin"
-                    />
-
-                    <div className={styles.playerTopMask} aria-hidden="true">
-                      <span>MOKAI ORIGINAL</span>
-                      <span>{activeEntry.kind === "reel" ? "MOVING IMAGE" : "STILL / CAROUSEL"}</span>
-                    </div>
-                    <div className={styles.playerBottomMask} aria-hidden="true">
-                      <span>MCU / {serialise(activeIndex + 1)}</span>
-                      <span>@MOKAIINDIA</span>
-                    </div>
-                  </div>
-                  <span className={styles.playerCaption} aria-hidden="true">
-                    <span>OFFICIAL ARCHIVE</span>
-                    <span>9 : 16</span>
-                  </span>
-                </div>
-              </div>
-
-              <button
-                type="button"
-                className={`${styles.stageNav} ${styles.stageNavNext}`}
-                onClick={() => move(1)}
-                aria-label="Next story"
-              >
-                <span>NEXT</span>
-                <ArrowRight size={18} aria-hidden="true" />
-              </button>
-            </div>
-
-            <footer className={styles.screeningFooter}>
-              <div className={styles.nowPlaying}>
-                <span>NOW SCREENING</span>
-                <strong>STORY {serialise(activeIndex + 1)}</strong>
-              </div>
-
-              <div className={styles.storyRail} aria-label="Choose a story">
-                {reels.map((entry, index) => (
+            <div className={styles.playerFrame}>
+              <div className={styles.playerViewport} data-media-kind={activeEntry.kind}>
+                {entered ? (
+                  <iframe
+                    key={activeEntry.code}
+                    className={styles.playerEmbed}
+                    src={embedUrl(activeEntry)}
+                    title={`Mokai story ${activeIndex + 1}`}
+                    allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                    allowFullScreen
+                    referrerPolicy="strict-origin-when-cross-origin"
+                  />
+                ) : (
                   <button
                     type="button"
-                    key={entry.code}
-                    className={index === activeIndex ? styles.activeRailItem : ""}
-                    onClick={() => setActiveIndex(index)}
-                    aria-label={`Open story ${index + 1}`}
-                    aria-current={index === activeIndex ? "true" : undefined}
+                    className={styles.enterGate}
+                    onClick={() => setEntered(true)}
+                    aria-label="Enter the Mokai screening room"
                   >
-                    <span>{serialise(index + 1)}</span>
+                    <Image
+                      src="/images/mokai-window.webp"
+                      alt=""
+                      fill
+                      priority
+                      sizes="(max-width: 760px) 86vw, 420px"
+                      className={styles.gateImage}
+                    />
+                    <span className={styles.gateVeil} />
+                    <span className={styles.gateCopy}>
+                      <span className={styles.gatePlay}><Play size={18} fill="currentColor" /></span>
+                      <strong>ENTER SCREENING</strong>
+                      <small>STORY 01 / MOKAI ORIGINAL</small>
+                    </span>
                   </button>
-                ))}
-              </div>
+                )}
 
-              <div className={styles.screeningHint}>
-                <span>ESC TO EXIT</span>
-                <span>← → TO NAVIGATE</span>
+                <div className={styles.playerTopMask} aria-hidden="true">
+                  <span>MOKAI ORIGINAL</span>
+                  <span>{activeEntry.kind === "reel" ? "MOVING IMAGE" : "FRAME / CAROUSEL"}</span>
+                </div>
+                <div className={styles.playerBottomMask} aria-hidden="true">
+                  <span>MCU / {serialise(activeIndex + 1)}</span>
+                  <span>@MOKAIINDIA</span>
+                </div>
               </div>
-            </footer>
-          </section>
+            </div>
+          </div>
+
+          <nav className={styles.screeningControls} aria-label="Screening controls">
+            <button type="button" onClick={() => move(-1)} aria-label="Previous story">
+              <ArrowLeft size={18} aria-hidden="true" />
+              <span>PREV</span>
+            </button>
+            <div className={styles.screeningRule} aria-hidden="true" />
+            <button type="button" onClick={() => move(1)} aria-label="Next story">
+              <span>NEXT</span>
+              <ArrowRight size={18} aria-hidden="true" />
+            </button>
+          </nav>
         </div>
-      ) : null}
+
+        <footer className={styles.screeningFooter}>
+          <span>ONE PLAYER / ZERO OVERLAP</span>
+          <div className={styles.storyRail} aria-label="Choose a story">
+            {reels.map((entry, index) => (
+              <button
+                type="button"
+                key={entry.code}
+                className={index === activeIndex ? styles.activeRailItem : ""}
+                onClick={() => selectStory(index)}
+                aria-label={`Screen story ${index + 1}`}
+                aria-current={index === activeIndex ? "true" : undefined}
+              >
+                {serialise(index + 1)}
+              </button>
+            ))}
+          </div>
+          <span>← → TO NAVIGATE</span>
+        </footer>
+      </section>
+
+      <header className={styles.archiveHeader}>
+        <div>
+          <span>THE CONTACT SHEET</span>
+          <strong>20 STORIES</strong>
+        </div>
+        <p>Select a frame. The screening room above swaps to that story; the previous Instagram player is destroyed immediately.</p>
+      </header>
+
+      <div className={styles.grid}>
+        {reels.map((entry, index) => {
+          const active = index === activeIndex;
+          return (
+            <article
+              key={entry.code}
+              className={`${styles.card} ${active ? styles.activeCard : ""}`}
+              data-media-kind={entry.kind}
+              data-reveal
+            >
+              <button
+                type="button"
+                className={styles.posterButton}
+                onClick={() => selectStory(index)}
+                aria-label={`Watch Mokai story ${index + 1}`}
+              >
+                <span className={styles.posterFrame} aria-hidden="true">
+                  <Image
+                    src={posterImage(index)}
+                    alt=""
+                    fill
+                    sizes="(max-width: 650px) 48vw, (max-width: 1000px) 30vw, 22vw"
+                    className={styles.posterImage}
+                  />
+                  <span className={styles.posterWash} />
+                  <span className={styles.posterTopline}>
+                    <span>MOKAI / MCU</span>
+                    <span>{entry.kind === "reel" ? "MOTION" : "FRAME"}</span>
+                  </span>
+                  <span className={styles.posterNumber}>{serialise(index + 1)}</span>
+                  <span className={styles.posterPlay}>
+                    <Play size={14} fill="currentColor" />
+                  </span>
+                  <span className={styles.posterCaption}>ENTER STORY</span>
+                </span>
+              </button>
+              <div className={styles.cardFooter} aria-hidden="true">
+                <span>STORY {serialise(index + 1)}</span>
+                <span>{active ? "NOW SCREENING" : "ARCHIVE"}</span>
+              </div>
+            </article>
+          );
+        })}
+      </div>
     </div>
   );
 }
