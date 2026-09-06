@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { ArrowLeft, ArrowRight, Play, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import styles from "./cinematic-reel-gallery.module.css";
@@ -35,6 +36,7 @@ function PosterCard({
     <article
       className={`${styles.card} ${featured ? styles.featuredCard : ""}`}
       data-media-kind={entry.kind}
+      data-reveal
     >
       <button
         type="button"
@@ -63,13 +65,15 @@ function PosterCard({
               <span>{entry.kind === "reel" ? "MOTION" : "FRAME"}</span>
             </span>
 
+            <span className={styles.posterSpine}>BANDRA · MUMBAI · 2026</span>
+            <span className={styles.posterKicker}>A MOKAI STORY</span>
             <span className={styles.posterSerial}>{serial}</span>
 
             <span className={styles.posterAction}>
               <span className={styles.playMark}>
                 <Play size={18} fill="currentColor" />
               </span>
-              <span>ENTER STORY</span>
+              <span>ENTER SCREENING</span>
             </span>
           </span>
         </span>
@@ -144,8 +148,17 @@ export default function CinematicReelGallery({ reels }: { reels: CinematicReel[]
             aria-label={`Mokai story ${activeIndex + 1}`}
           >
             <header className={styles.screeningHeader}>
-              <span>MOKAI CINEMATIC UNIVERSE</span>
-              <span>SCREENING {serialise(activeIndex + 1)} / {serialise(reels.length)}</span>
+              <Image
+                className={styles.screeningLogo}
+                src="/brand/mokai-horizontal.svg"
+                alt="Mokai"
+                width={122}
+                height={34}
+                priority
+              />
+              <span className={styles.screeningStatus}>
+                PRIVATE SCREENING · {serialise(activeIndex + 1)} / {serialise(reels.length)}
+              </span>
               <button
                 type="button"
                 className={styles.closeButton}
@@ -174,6 +187,7 @@ export default function CinematicReelGallery({ reels }: { reels: CinematicReel[]
                 </span>
 
                 <div className={styles.playerFrame}>
+                  <span className={styles.frameNotch} aria-hidden="true" />
                   <div className={styles.playerViewport} data-media-kind={activeEntry.kind}>
                     <iframe
                       key={activeEntry.code}
@@ -194,6 +208,10 @@ export default function CinematicReelGallery({ reels }: { reels: CinematicReel[]
                       <span>@MOKAIINDIA</span>
                     </div>
                   </div>
+                  <span className={styles.playerCaption} aria-hidden="true">
+                    <span>OFFICIAL ARCHIVE</span>
+                    <span>9 : 16</span>
+                  </span>
                 </div>
               </div>
 
