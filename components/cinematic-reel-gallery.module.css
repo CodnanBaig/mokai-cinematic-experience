@@ -6,7 +6,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(34px, 4.5vw, 72px) clamp(16px, 2vw, 30px);
+  gap: clamp(42px, 5.5vw, 86px) clamp(14px, 2.2vw, 34px);
   align-items: start;
 }
 
@@ -18,7 +18,7 @@
 .card:nth-child(8n + 2),
 .card:nth-child(8n + 4),
 .card:nth-child(8n + 7) {
-  padding-top: clamp(26px, 3.2vw, 54px);
+  padding-top: clamp(30px, 4vw, 64px);
 }
 
 .posterButton {
@@ -34,43 +34,43 @@
 
 .posterButton:focus-visible {
   outline: 2px solid var(--matcha-dark);
-  outline-offset: 7px;
+  outline-offset: 8px;
 }
 
 .posterFrame {
   position: relative;
   display: block;
-  padding: 7px;
+  padding: 6px;
   overflow: hidden;
   border: 1px solid rgba(51, 50, 50, .34);
-  border-radius: 46% 46% 10px 10px;
-  background: var(--ink);
-  box-shadow: 0 24px 55px rgba(62, 43, 46, .13);
+  border-radius: 2px;
+  background: #151011;
+  box-shadow: 0 24px 58px rgba(62, 43, 46, .12);
   isolation: isolate;
-  transition: transform .45s cubic-bezier(.2, .75, .15, 1), box-shadow .45s ease;
+  transition:
+    transform .52s cubic-bezier(.18, .78, .16, 1),
+    box-shadow .52s ease,
+    border-color .35s ease;
 }
 
 .posterFrame::before {
   content: "";
   position: absolute;
   z-index: 7;
-  inset: 13px;
-  border: 1px solid rgba(243, 223, 213, .34);
-  border-radius: 45% 45% 5px 5px;
+  inset: 12px;
+  border: 1px solid rgba(243, 223, 213, .24);
   pointer-events: none;
 }
 
 .posterFrame::after {
-  content: "MOKAI / 2026";
+  content: "";
   position: absolute;
   z-index: 7;
-  right: 16px;
-  top: 50%;
-  writing-mode: vertical-rl;
-  transform: translateY(-50%);
-  color: rgba(243, 223, 213, .56);
-  font-size: 6px;
-  letter-spacing: .24em;
+  left: 15px;
+  right: 15px;
+  top: 52px;
+  height: 1px;
+  background: rgba(243, 223, 213, .18);
   pointer-events: none;
 }
 
@@ -79,7 +79,6 @@
   display: block;
   overflow: hidden;
   aspect-ratio: 9 / 14.8;
-  border-radius: 45% 45% 5px 5px;
   background: var(--coffee);
   isolation: isolate;
 }
@@ -87,15 +86,15 @@
 .previewEmbed {
   position: absolute;
   z-index: 0;
-  top: -72px;
+  top: -82px;
   left: 50%;
-  width: 112%;
-  height: calc(100% + 250px);
+  width: 116%;
+  height: calc(100% + 290px);
   border: 0;
-  background: white;
+  background: #fff;
   transform: translateX(-50%);
   transform-origin: top center;
-  filter: saturate(.78) contrast(1.05) sepia(.05);
+  filter: saturate(.76) contrast(1.04) sepia(.05);
   pointer-events: none;
 }
 
@@ -109,14 +108,14 @@
 .previewVeil {
   z-index: 1;
   background:
-    linear-gradient(to top, rgba(20, 15, 16, .9) 0%, rgba(20, 15, 16, .22) 38%, rgba(20, 15, 16, .08) 64%, rgba(20, 15, 16, .48) 100%),
-    linear-gradient(135deg, rgba(107, 43, 115, .2), transparent 44%);
-  transition: opacity .4s ease, background .4s ease;
+    linear-gradient(to top, rgba(17, 12, 13, .94) 0%, rgba(17, 12, 13, .52) 20%, rgba(17, 12, 13, .07) 56%, rgba(17, 12, 13, .46) 100%),
+    linear-gradient(135deg, rgba(107, 43, 115, .16), transparent 44%);
+  transition: opacity .45s ease, background .45s ease;
 }
 
 .previewGrain {
   z-index: 2;
-  opacity: .14;
+  opacity: .13;
   background-image: url('/textures/noise.svg');
   mix-blend-mode: screen;
 }
@@ -132,41 +131,63 @@
 
 .posterTopline {
   position: absolute;
-  top: 24px;
-  left: 24px;
-  right: 28px;
+  top: 25px;
+  left: 25px;
+  right: 25px;
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  font-size: 7px;
-  letter-spacing: .19em;
+  font-size: 6px;
+  letter-spacing: .22em;
   text-transform: uppercase;
 }
 
 .posterTopline span:last-child {
-  color: rgba(243, 223, 213, .72);
+  color: var(--matcha);
+}
+
+.posterSpine {
+  position: absolute;
+  right: 21px;
+  top: 50%;
+  writing-mode: vertical-rl;
+  transform: translateY(-50%);
+  color: rgba(243, 223, 213, .48);
+  font-size: 5px;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+}
+
+.posterKicker {
+  position: absolute;
+  left: 23px;
+  bottom: 124px;
+  color: rgba(243, 223, 213, .68);
+  font-size: 6px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
 }
 
 .posterSerial {
   position: absolute;
-  left: 22px;
-  bottom: 76px;
+  left: 20px;
+  bottom: 71px;
   font-family: var(--serif);
-  font-size: clamp(52px, 4.8vw, 78px);
-  line-height: .76;
-  letter-spacing: -.055em;
-  text-shadow: 0 12px 30px rgba(0, 0, 0, .2);
+  font-size: clamp(58px, 5vw, 82px);
+  line-height: .72;
+  letter-spacing: -.065em;
+  text-shadow: 0 12px 30px rgba(0, 0, 0, .22);
 }
 
 .posterAction {
   position: absolute;
   left: 22px;
   right: 22px;
-  bottom: 23px;
+  bottom: 22px;
   display: flex;
   align-items: center;
   gap: 11px;
-  font-size: 7px;
+  font-size: 6px;
   letter-spacing: .2em;
   text-transform: uppercase;
 }
@@ -179,14 +200,14 @@
   place-items: center;
   border: 1px solid rgba(243, 223, 213, .62);
   border-radius: 50%;
-  background: rgba(243, 223, 213, .12);
+  background: rgba(243, 223, 213, .1);
   backdrop-filter: blur(8px);
   transition: color .28s ease, background .28s ease, transform .28s ease;
 }
 
 .playMark svg {
-  width: 13px;
-  height: 13px;
+  width: 12px;
+  height: 12px;
   transform: translateX(1px);
 }
 
@@ -194,25 +215,30 @@
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  padding: 11px 3px 0;
+  padding: 11px 2px 0;
   color: var(--ink);
-  font-size: 7px;
+  font-size: 6px;
   line-height: 1.3;
-  letter-spacing: .18em;
+  letter-spacing: .2em;
   text-transform: uppercase;
 }
 
 .cardFooter span:last-child {
-  color: rgba(51, 50, 50, .54);
+  color: rgba(51, 50, 50, .5);
   text-align: right;
 }
 
 .featuredCard .posterFrame {
-  border-color: rgba(107, 43, 115, .5);
+  border-color: rgba(107, 43, 115, .48);
+  box-shadow: 0 30px 70px rgba(107, 43, 115, .12);
 }
 
 .featuredCard .posterFrame::before {
-  border-color: rgba(201, 100, 207, .52);
+  border-color: rgba(201, 100, 207, .48);
+}
+
+.featuredCard .posterSerial {
+  color: var(--matcha);
 }
 
 .featuredCard .cardFooter span:last-child {
@@ -221,14 +247,15 @@
 
 @media (hover: hover) {
   .posterButton:hover .posterFrame {
-    transform: translateY(-8px) rotate(-.35deg);
-    box-shadow: 0 38px 75px rgba(62, 43, 46, .2);
+    transform: translateY(-10px) rotate(-.28deg);
+    border-color: rgba(107, 43, 115, .6);
+    box-shadow: 0 42px 90px rgba(62, 43, 46, .2);
   }
 
   .posterButton:hover .previewVeil {
     background:
-      linear-gradient(to top, rgba(20, 15, 16, .78) 0%, rgba(20, 15, 16, .08) 48%, rgba(20, 15, 16, .28) 100%),
-      linear-gradient(135deg, rgba(201, 100, 207, .16), transparent 48%);
+      linear-gradient(to top, rgba(17, 12, 13, .86) 0%, rgba(17, 12, 13, .32) 24%, rgba(17, 12, 13, .02) 62%, rgba(17, 12, 13, .34) 100%),
+      linear-gradient(135deg, rgba(201, 100, 207, .14), transparent 48%);
   }
 
   .posterButton:hover .playMark {
@@ -243,7 +270,7 @@
   z-index: 500;
   inset: 0;
   display: grid;
-  background: rgba(15, 11, 12, .98);
+  background: rgba(13, 9, 10, .985);
   animation: playerFade .24s ease both;
 }
 
@@ -257,8 +284,8 @@
 
 .playerBackdrop::before {
   background:
-    radial-gradient(circle at 12% 12%, rgba(201, 100, 207, .16), transparent 26%),
-    radial-gradient(circle at 88% 78%, rgba(199, 172, 127, .09), transparent 22%);
+    radial-gradient(circle at 10% 14%, rgba(201, 100, 207, .13), transparent 28%),
+    radial-gradient(circle at 88% 76%, rgba(199, 172, 127, .08), transparent 24%);
 }
 
 .playerBackdrop::after {
@@ -273,30 +300,38 @@
   min-height: 100dvh;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
-  padding: 24px clamp(18px, 3.4vw, 58px) 22px;
+  padding: 20px clamp(18px, 3.4vw, 58px) 20px;
   color: var(--paper);
 }
 
 .screeningHeader {
-  min-height: 54px;
+  min-height: 58px;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 18px;
-  border-bottom: 1px solid rgba(243, 223, 213, .2);
-  font-size: 7px;
-  letter-spacing: .2em;
-  text-transform: uppercase;
+  padding-bottom: 9px;
+  border-bottom: 1px solid rgba(243, 223, 213, .18);
 }
 
-.screeningHeader > span:nth-child(2) {
+.screeningLogo {
+  width: 104px;
+  height: auto;
+  filter: brightness(0) invert(1);
+  opacity: .92;
+}
+
+.screeningStatus {
   color: var(--matcha);
+  font-size: 6px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
 }
 
 .closeButton {
   justify-self: end;
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   display: grid;
   place-items: center;
   padding: 0;
@@ -328,7 +363,19 @@
   grid-template-columns: minmax(72px, 1fr) minmax(280px, 560px) minmax(72px, 1fr);
   align-items: center;
   gap: clamp(18px, 4vw, 68px);
-  padding: clamp(18px, 3vh, 34px) 0;
+  padding: clamp(16px, 2.4vh, 28px) 0;
+}
+
+.screeningStage::before {
+  content: "MOKAI / SCREENING ROOM / BANDRA";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  color: rgba(243, 223, 213, .18);
+  font-size: 5px;
+  letter-spacing: .28em;
+  writing-mode: vertical-rl;
+  transform: translateY(-50%) rotate(180deg);
 }
 
 .stageNav {
@@ -340,10 +387,10 @@
   gap: 12px;
   padding: 0;
   border: 0;
-  color: rgba(243, 223, 213, .66);
+  color: rgba(243, 223, 213, .58);
   background: transparent;
-  font-size: 7px;
-  letter-spacing: .2em;
+  font-size: 6px;
+  letter-spacing: .21em;
   cursor: pointer;
   transition: color .25s ease;
 }
@@ -354,7 +401,7 @@
   top: 50%;
   width: clamp(34px, 6vw, 92px);
   height: 1px;
-  background: rgba(243, 223, 213, .22);
+  background: rgba(243, 223, 213, .2);
   transition: width .3s ease, background .3s ease;
 }
 
@@ -402,7 +449,7 @@
   line-height: .62;
   letter-spacing: -.09em;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(243, 223, 213, .08);
+  -webkit-text-stroke: 1px rgba(243, 223, 213, .07);
   transform: translate(-51%, -49%);
   pointer-events: none;
   user-select: none;
@@ -410,28 +457,37 @@
 
 .playerFrame {
   position: relative;
-  width: min(410px, 31vw, 48vh);
-  padding: 8px;
-  border: 1px solid rgba(243, 223, 213, .38);
-  border-radius: 46% 46% 12px 12px;
-  background: #0b0909;
-  box-shadow: 0 45px 130px rgba(0, 0, 0, .55);
+  width: min(390px, 30vw, 50vh);
+  padding: 7px 7px 0;
+  border: 1px solid rgba(243, 223, 213, .34);
+  background: #080606;
+  box-shadow: 0 45px 140px rgba(0, 0, 0, .58);
 }
 
 .playerFrame::before {
   content: "";
   position: absolute;
-  inset: -9px;
-  border: 1px solid rgba(201, 100, 207, .25);
-  border-radius: 47% 47% 16px 16px;
+  inset: -10px;
+  border: 1px solid rgba(201, 100, 207, .22);
   pointer-events: none;
+}
+
+.frameNotch {
+  position: absolute;
+  z-index: 7;
+  top: -5px;
+  left: 50%;
+  width: 52px;
+  height: 9px;
+  border: 1px solid rgba(243, 223, 213, .34);
+  background: #080606;
+  transform: translateX(-50%);
 }
 
 .playerViewport {
   position: relative;
   overflow: hidden;
   aspect-ratio: 9 / 16;
-  border-radius: 45% 45% 6px 6px;
   background: #fff;
   isolation: isolate;
 }
@@ -439,13 +495,17 @@
 .playerEmbed {
   position: absolute;
   z-index: 1;
-  top: -72px;
+  top: -92px;
   left: 50%;
-  width: 112%;
-  height: calc(100% + 275px);
+  width: 118%;
+  height: calc(100% + 330px);
   border: 0;
   background: #fff;
   transform: translateX(-50%);
+}
+
+.playerViewport[data-media-kind="post"] .playerEmbed {
+  top: -78px;
 }
 
 .playerTopMask,
@@ -459,24 +519,38 @@
   align-items: center;
   gap: 14px;
   color: var(--paper);
-  font-size: 6px;
-  letter-spacing: .18em;
+  font-size: 5px;
+  letter-spacing: .2em;
   text-transform: uppercase;
   pointer-events: none;
 }
 
 .playerTopMask {
   top: 0;
-  min-height: 60px;
-  padding: 18px 20px 24px;
-  background: linear-gradient(to bottom, rgba(15, 11, 12, .82), transparent);
+  min-height: 74px;
+  padding: 18px 18px 28px;
+  background: linear-gradient(to bottom, rgba(13, 9, 10, .93) 0%, rgba(13, 9, 10, .6) 28%, transparent 100%);
 }
 
 .playerBottomMask {
   bottom: 0;
-  min-height: 78px;
-  padding: 28px 20px 16px;
-  background: linear-gradient(to top, rgba(15, 11, 12, .95) 16%, transparent);
+  min-height: 112px;
+  align-items: end;
+  padding: 46px 18px 16px;
+  background: linear-gradient(to top, rgba(13, 9, 10, .98) 0%, rgba(13, 9, 10, .74) 38%, transparent 100%);
+}
+
+.playerCaption {
+  min-height: 33px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 0 3px;
+  color: rgba(243, 223, 213, .54);
+  font-size: 5px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
 }
 
 .screeningFooter {
@@ -486,7 +560,7 @@
   gap: 28px;
   min-height: 88px;
   padding-top: 16px;
-  border-top: 1px solid rgba(243, 223, 213, .2);
+  border-top: 1px solid rgba(243, 223, 213, .18);
 }
 
 .nowPlaying {
@@ -496,10 +570,10 @@
 
 .nowPlaying span,
 .screeningHint {
-  font-size: 6px;
-  letter-spacing: .19em;
+  font-size: 5px;
+  letter-spacing: .2em;
   text-transform: uppercase;
-  color: rgba(243, 223, 213, .54);
+  color: rgba(243, 223, 213, .48);
 }
 
 .nowPlaying strong {
@@ -520,11 +594,11 @@
 
 .storyRail button {
   position: relative;
-  height: 42px;
+  height: 40px;
   padding: 0 0 8px;
   border: 0;
-  border-bottom: 1px solid rgba(243, 223, 213, .24);
-  color: rgba(243, 223, 213, .4);
+  border-bottom: 1px solid rgba(243, 223, 213, .2);
+  color: rgba(243, 223, 213, .34);
   background: transparent;
   font-size: 5px;
   cursor: pointer;
@@ -537,7 +611,7 @@
   left: 50%;
   bottom: -1px;
   width: 1px;
-  height: 8px;
+  height: 7px;
   background: currentColor;
   transform: translateX(-50%);
 }
@@ -570,7 +644,7 @@
   }
 
   .screeningStage {
-    grid-template-columns: 74px minmax(280px, 500px) 74px;
+    grid-template-columns: 72px minmax(280px, 500px) 72px;
     gap: 20px;
   }
 
@@ -585,16 +659,12 @@
   .stageNavPrevious,
   .stageNavNext {
     padding: 0;
-  }
-
-  .stageNavPrevious,
-  .stageNavNext {
     flex-direction: column;
     justify-content: center;
   }
 
   .playerFrame {
-    width: min(390px, 38vw, 50vh);
+    width: min(375px, 38vw, 50vh);
   }
 
   .screeningFooter {
@@ -609,17 +679,17 @@
 @media (max-width: 820px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 34px 14px;
+    gap: 36px 14px;
   }
 
   .card:nth-child(8n + 2),
   .card:nth-child(8n + 4),
   .card:nth-child(8n + 7) {
-    padding-top: 26px;
+    padding-top: 24px;
   }
 
   .screeningRoom {
-    padding: 14px 14px 12px;
+    padding: 13px 13px 11px;
   }
 
   .screeningHeader {
@@ -627,14 +697,22 @@
     grid-template-columns: 1fr auto;
   }
 
-  .screeningHeader > span:nth-child(2) {
+  .screeningLogo {
+    width: 86px;
+  }
+
+  .screeningStatus {
     display: none;
   }
 
   .screeningStage {
     grid-template-columns: 44px minmax(0, 1fr) 44px;
     gap: 8px;
-    padding: 16px 0;
+    padding: 14px 0;
+  }
+
+  .screeningStage::before {
+    display: none;
   }
 
   .stageNav {
@@ -647,7 +725,7 @@
   }
 
   .playerFrame {
-    width: min(76vw, 390px, 57vh);
+    width: min(75vw, 370px, 55vh);
   }
 
   .playerGhostNumber {
@@ -656,7 +734,7 @@
 
   .screeningFooter {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 12px;
     min-height: auto;
   }
 
@@ -690,7 +768,7 @@
     max-width: 390px;
     margin-inline: auto;
     grid-template-columns: 1fr;
-    gap: 34px;
+    gap: 36px;
   }
 
   .card:nth-child(8n + 2),
@@ -699,24 +777,16 @@
     padding-top: 0;
   }
 
-  .posterFrame {
-    border-radius: 43% 43% 8px 8px;
-  }
-
-  .previewViewport {
-    border-radius: 42% 42% 4px 4px;
-  }
-
   .posterSerial {
-    font-size: 70px;
+    font-size: 74px;
+  }
+
+  .posterKicker {
+    bottom: 130px;
   }
 
   .screeningRoom {
     min-height: 100dvh;
-  }
-
-  .screeningHeader > span:first-child {
-    font-size: 6px;
   }
 
   .screeningStage {
@@ -729,21 +799,18 @@
   }
 
   .playerFrame {
-    width: min(79vw, 360px, 55vh);
-    padding: 6px;
+    width: min(78vw, 350px, 53vh);
+    padding: 6px 6px 0;
   }
 
   .playerTopMask,
   .playerBottomMask {
-    font-size: 5px;
+    font-size: 4.5px;
   }
 
-  .playerTopMask {
-    padding-inline: 16px;
-  }
-
+  .playerTopMask,
   .playerBottomMask {
-    padding-inline: 16px;
+    padding-inline: 14px;
   }
 
   .nowPlaying strong {
@@ -753,8 +820,8 @@
 
 @media (max-height: 720px) and (min-width: 821px) {
   .screeningRoom {
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 
   .screeningHeader {
@@ -762,16 +829,16 @@
   }
 
   .screeningStage {
-    padding-block: 10px;
+    padding-block: 8px;
   }
 
   .playerFrame {
-    width: min(350px, 42vh);
+    width: min(330px, 43vh);
   }
 
   .screeningFooter {
-    min-height: 72px;
-    padding-top: 10px;
+    min-height: 68px;
+    padding-top: 8px;
   }
 }
 
