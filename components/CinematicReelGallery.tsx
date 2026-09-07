@@ -111,7 +111,7 @@ export default function CinematicReelGallery({ reels }: { reels: CinematicReel[]
 
       if (siteNav) {
         siteNav.style.visibility = previousNavVisibility;
-        if (previousNavAriaHidden === null) siteNav.removeAttribute("aria-hidden");
+        if (previousNavAriaHidden == null) siteNav.removeAttribute("aria-hidden");
         else siteNav.setAttribute("aria-hidden", previousNavAriaHidden);
       }
     };
