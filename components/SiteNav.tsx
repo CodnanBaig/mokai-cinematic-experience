@@ -39,7 +39,7 @@ export default function SiteNav() {
   const close = () => setOpen(false);
 
   return (
-    <header className="nav-shell" data-nav-animate>
+    <header className="nav-shell" data-nav-animate style={{ color: "var(--ink)" }}>
       <Link className="nav-logo" href={isHome ? "#top" : "/"} aria-label="Mokai home" onClick={close}>
         <BrandMark compact />
       </Link>
