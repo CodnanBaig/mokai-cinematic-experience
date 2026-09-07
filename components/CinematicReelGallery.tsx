@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, Play, X } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./cinematic-reel-gallery.module.css";
 
 export type CinematicReel = {
@@ -70,6 +70,7 @@ function ReelCard({
 
 export default function CinematicReelGallery({ reels }: { reels: CinematicReel[] }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const activeRailItem = useRef<HTMLButtonElement | null>(null);
   const activeEntry = activeIndex === null ? null : reels[activeIndex];
 
   const move = useCallback(
@@ -86,7 +87,16 @@ export default function CinematicReelGallery({ reels }: { reels: CinematicReel[]
     if (activeIndex === null) return;
 
     const previousOverflow = document.body.style.overflow;
+    const siteNav = document.querySelector<HTMLElement>(".nav-shell");
+    const previousNavVisibility = siteNav?.style.visibility ?? "";
+    const previousNavAriaHidden = siteNav?.getAttribute("aria-hidden");
+
     document.body.style.overflow = "hidden";
+
+    if (siteNav) {
+      siteNav.style.visibility = "hidden";
+      siteNav.setAttribute("aria-hidden", "true");
+    }
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setActiveIndex(null);
@@ -98,8 +108,19 @@ export default function CinematicReelGallery({ reels }: { reels: CinematicReel[]
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
+
+      if (siteNav) {
+        siteNav.style.visibility = previousNavVisibility;
+        if (previousNavAriaHidden === null) siteNav.removeAttribute("aria-hidden");
+        else siteNav.setAttribute("aria-hidden", previousNavAriaHidden);
+      }
     };
   }, [activeIndex, move]);
+
+  useEffect(() => {
+    if (activeIndex === null) return;
+    activeRailItem.current?.scrollIntoView({ block: "nearest", inline: "center" });
+  }, [activeIndex]);
 
   return (
     <div className={styles.gallery}>
@@ -194,6 +215,7 @@ export default function CinematicReelGallery({ reels }: { reels: CinematicReel[]
                   <button
                     type="button"
                     key={entry.code}
+                    ref={index === activeIndex ? activeRailItem : undefined}
                     className={index === activeIndex ? styles.activeRailItem : ""}
                     onClick={() => setActiveIndex(index)}
                     aria-label={`Open story ${index + 1}`}
