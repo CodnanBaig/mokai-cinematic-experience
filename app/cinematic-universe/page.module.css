@@ -6,14 +6,6 @@
   color: var(--paper);
 }
 
-.page :global(.nav-logo) {
-  background: rgba(230, 217, 198, .95);
-  border: 1px solid rgba(51, 50, 50, .14);
-  border-radius: 999px;
-  padding: 10px 14px;
-  backdrop-filter: blur(12px);
-}
-
 .grain {
   position: fixed;
   inset: 0;
